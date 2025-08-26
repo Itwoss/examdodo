@@ -1,0 +1,183 @@
+
+
+<script>
+  const wrap = document.getElementById('catWrap');
+  const prev = document.getElementById('prevBtn');
+  const next = document.getElementById('nextBtn');
+
+  function scrollByAmount(dir){
+    const amount = Math.min(480, wrap.clientWidth * 0.8);
+    wrap.scrollBy({ left: dir * amount, behavior: 'smooth' });
+  }
+  prev.addEventListener('click', () => scrollByAmount(-1));
+  next.addEventListener('click', () => scrollByAmount(1));
+
+  // Hide arrows if not scrollable (optional)
+  const updateArrows = () => {
+    const max = wrap.scrollWidth - wrap.clientWidth - 4;
+    prev.style.opacity = wrap.scrollLeft <= 4 ? .45 : 1;
+    next.style.opacity = wrap.scrollLeft >= max ? .45 : 1;
+  };
+  wrap.addEventListener('scroll', updateArrows, { passive: true });
+  window.addEventListener('resize', updateArrows);
+  updateArrows();
+</script>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer-gradient text-white">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-10 pt-12 pb-8">
+    
+    <!-- Top section -->
+    <div class="grid md:grid-cols-4 gap-8 mb-10">
+      
+      <!-- Brand column -->
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="https://storage.googleapis.com/a1aa/image/58325683-719c-4d3a-88d5-47c504189d8b.jpg"
+               alt="Exam Dodo logo"
+               class="w-10 h-10 rounded-full border border-white/30"/>
+          <div class="text-2xl font-extrabold tracking-wide">EXAM DODO</div>
+        </div>
+        <p class="text-white/90 mb-6 leading-relaxed">
+          Your trusted partner in competitive exam preparation. We provide comprehensive study materials, 
+          expert guidance, and innovative learning solutions.
+        </p>
+        
+        <!-- Social links -->
+        <div class="flex items-center gap-3">
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-facebook-f text-sm"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-twitter text-sm"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-linkedin-in text-sm"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-youtube text-sm"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-instagram text-sm"></i>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+        <ul class="space-y-3 text-white/90">
+          <li><a href="#" onclick="navigateTo('home')" class="hover:text-white transition">Home</a></li>
+          <li><a href="#" onclick="navigateTo('all-exams')" class="hover:text-white transition">All Exams</a></li>
+          <li><a href="#" onclick="navigateTo('mock-tests')" class="hover:text-white transition">Mock Tests</a></li>
+          <li><a href="#" onclick="navigateTo('previous-papers')" class="hover:text-white transition">Previous Papers</a></li>
+          <li><a href="#" onclick="navigateTo('syllabus')" class="hover:text-white transition">Syllabus</a></li>
+          <li><a href="#" onclick="navigateTo('about')" class="hover:text-white transition">About Us</a></li>
+        </ul>
+      </div>
+      
+      <!-- Popular Exams -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Popular Exams</h4>
+        <ul class="space-y-3 text-white/90">
+          <li><a href="#" onclick="navigateTo('upsc')" class="hover:text-white transition">UPSC</a></li>
+          <li><a href="#" onclick="navigateTo('ssc')" class="hover:text-white transition">SSC</a></li>
+          <li><a href="#" onclick="navigateTo('banking')" class="hover:text-white transition">Banking</a></li>
+          <li><a href="#" onclick="navigateTo('defence')" class="hover:text-white transition">Defence</a></li>
+          <li><a href="#" onclick="navigateTo('teaching')" class="hover:text-white transition">Teaching</a></li>
+          <li><a href="#" onclick="navigateTo('tnpsc')" class="hover:text-white transition">TNPSC</a></li>
+        </ul>
+      </div>
+      
+      <!-- Contact Info -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+        <div class="space-y-4 text-white/90">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-map-marker-alt text-examgreenlight mt-1"></i>
+            <div>
+              <p class="font-medium">Address</p>
+              <p class="text-sm">123 Education Street<br/>Chennai, Tamil Nadu 600001</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <i class="fas fa-phone text-examgreenlight mt-1"></i>
+            <div>
+              <p class="font-medium">Phone</p>
+              <p class="text-sm">+91 98765 43210</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <i class="fas fa-envelope text-examgreenlight mt-1"></i>
+            <div>
+              <p class="font-medium">Email</p>
+              <p class="text-sm">support@examdodo.com</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <i class="fas fa-clock text-examgreenlight mt-1"></i>
+            <div>
+              <p class="font-medium">Support Hours</p>
+              <p class="text-sm">Mon - Sat: 9 AM - 8 PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Newsletter Subscription -->
+    <div class="border-t border-white/20 pt-8 mb-8">
+      <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div>
+          <h4 class="text-xl font-bold mb-2">Stay Updated!</h4>
+          <p class="text-white/90">Get the latest exam notifications, study tips, and exclusive offers.</p>
+        </div>
+        <div class="flex gap-3">
+          <input type="email" 
+                 placeholder="Enter your email address" 
+                 class="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-examgreenlight focus:bg-white/15 transition"/>
+          <button class="px-6 py-3 bg-examgreenlight hover:bg-examgreen text-ink font-semibold rounded-xl transition">
+            Subscribe
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bottom bar -->
+    <div class="border-t border-white/20 pt-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="text-white/80 text-sm text-center md:text-left">
+          © 2025 Exam Dodo. All rights reserved. | Designed with ❤️ for your success.
+        </div>
+        <div class="flex flex-wrap gap-6 text-sm text-white/80">
+          <a href="#" class="hover:text-white transition">Privacy Policy</a>
+          <a href="#" class="hover:text-white transition">Terms of Service</a>
+          <a href="#" class="hover:text-white transition">Refund Policy</a>
+          <a href="#" class="hover:text-white transition">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+  function navigateTo(path) {
+    console.log('Navigate to:', path);
+    // Add your navigation logic here
+  }
+  
+  // Newsletter subscription
+  document.querySelector('button').addEventListener('click', function() {
+    const email = document.querySelector('input[type="email"]').value;
+    if (email) {
+      alert('Thank you for subscribing! We will send you updates at: ' + email);
+      document.querySelector('input[type="email"]').value = '';
+    } else {
+      alert('Please enter a valid email address.');
+    }
+  });
+</script>

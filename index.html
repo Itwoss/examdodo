@@ -1,0 +1,3030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Exam Dodo - Alternative Design</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons + Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            examgreen: '#42C8B7',
+            examgreenlight: '#42C8B7',
+            examgreendark: '#329d8f',
+          },
+          boxShadow: {
+            glow: '0 8px 24px rgba(66,200,183,.18)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body{ font-family: "Inter", sans-serif; }
+    .logo-ring::before{
+      content:"";
+      position:absolute; inset:-8px;
+      border-radius:999px;
+      background:
+        radial-gradient(60% 60% at 30% 30%, rgba(66,200,183,.25), transparent 60%),
+        radial-gradient(60% 60% at 70% 70%, rgba(50,157,143,.20), transparent 60%);
+      filter: blur(6px);
+      z-index:-1;
+    }
+    .link-underline{
+      position:relative;
+    }
+    .link-underline::after{
+      content:"";
+      position:absolute; left:0; bottom:-6px;
+      height:2px; width:0;
+      background:#42C8B7;
+      transition:width .25s ease;
+      border-radius:2px;
+    }
+    .link-underline:hover::after{ width:100%; }
+  </style>
+</head>
+<body class="bg-gray-100 text-black"> <!-- Page background -->
+
+  <!-- ====================== HEADER ====================== -->
+  <header class="footer-gradient-menu text-white shadow-md"> <!-- Header background -->
+    <div class="max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between px-3 sm:px-4 md:px-6 lg:px-8 py-3 gap-3 lg:gap-0">
+
+      <!-- Brand -->
+      <a href="#" onclick="navigateTo('home')" class="flex items-center gap-3 group">
+        <div class="relative logo-ring">
+          <img src="Cute cartoon Baby Dodo Bird illustration (1).jpeg"
+               alt="Exam Dodo logo"
+               class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/50 shadow-glow"/>
+        </div>
+        <div class="leading-tight select-none">
+          <div class="font-extrabold text-xl sm:text-2xl tracking-wide">
+            EXAM DODO
+          </div>
+        </div>
+      </a>
+
+      <!-- Buttons -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button
+          type="button"
+          onclick="navigateTo('signup')"
+          class="relative overflow-hidden rounded-full px-5 sm:px-6 py-2 text-sm font-semibold text-examgreen bg-white border border-white/70 hover:bg-gray-100 transition shadow-glow">
+          <span class="relative flex items-center gap-2">
+            <i class="fas fa-user-plus"></i>
+            <span>Sign Up</span>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          onclick="""navigateTo('login')"
+          class="""relative rounded-full px-5 sm:px-6 py-2 text-sm font-semibold text-white bg-examgreendark hover:bg-white hover:text-examgreen border border-white/70 transition shadow-glow">
+          <span class="relative flex items-center gap-2">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Login</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Exam Dodo — Mega Menu + Hero</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (icons in the menu) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+
+  <!-- Fonts + Theme -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --ink:#0f3a35;          /* deep green text / panel */
+      --ink-2:#184a44;
+      --mint:#eaf2ef;         /* page bg */
+      --pill:#e9eee6;         /* trust badge bg */
+      --cta:#163f39;          /* primary button */
+      --cta-ring:#88c19c;     /* small accent green */
+    }
+    html,body{ background: var(--mint); color:#122220 }
+    body{ font-family:"Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial }
+
+    /* ===== Mega menu show/hide logic (hover + click-pin) ===== */
+    .menu-item .menu-panel{ opacity:0; pointer-events:none; transition:opacity .2s ease }
+    .menu-item:hover .menu-panel{ opacity:1; pointer-events:auto }     /* hover to show */
+    .menu-item.open .menu-panel{ opacity:1; pointer-events:auto }      /* click-pin to keep open */
+
+    /* Subtle grid in hero */
+    .bg-grid {
+      background-image:
+        linear-gradient(to right, rgba(16,24,20,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16,24,20,.06) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    /* soft radial sweep on right */
+    .sweep:before{
+      content:"";
+      position:absolute; inset:-10% -20% auto auto;
+      width:1200px; height:1200px;
+      background: radial-gradient(60% 60% at 85% 25%, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 60%),
+                  radial-gradient(35% 35% at 92% 18%, rgba(255,255,255,.8) 0%, rgba(255,255,255,0) 60%);
+      pointer-events:none; filter: blur(1px);
+    }
+    .title{ letter-spacing:-.02em; font-weight:800; font-size: clamp(34px, 6vw, 76px); line-height:1.05; color: var(--ink); }
+    .accent{ color:#2b7a5a; }
+    .btn{ border-radius:999px; padding:18px 26px; font-weight:600; display:inline-flex; align-items:center; gap:12px; box-shadow:0 12px 24px rgba(22,63,57,.08); }
+    .btn-primary{ background:var(--cta); color:#fff; border:1px solid rgba(0,0,0,.06); }
+    .btn-ghost{ background:#e8efe9; color:#1e3a34; border:1px solid rgba(0,0,0,.06); }
+    .ring-dot{ display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:999px; border:2px solid var(--cta-ring); }
+    .panel{ background:var(--ink); color:#eaf6f1; border-radius:26px; min-height:440px; box-shadow:0 24px 60px rgba(9,32,28,.25); }
+    .photo-card{ border-radius:26px; overflow:hidden; background:#fff; box-shadow:0 14px 28px rgba(10,35,30,.20), 0 6px 12px rgba(10,35,30,.10); }
+    .photo-badge{ background:#f3f8f6; color:#2a564d; border-radius:999px; padding:8px 14px; font-weight:700; box-shadow:0 6px 16px rgba(10,35,30,.10), inset 0 0 0 1px rgba(10,35,30,.08); }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ====== THIN TITLE MENU + BLUR MEGA CARDS (ALL TITLES) ====== -->
+  <nav class="relative z-40 max-w-[1440px] mx-auto border-t border-gray-200 px-2 sm:px-4 md:px-6 lg:px-8">
+    <ul class="flex flex-wrap gap-x-5 gap-y-2 md:gap-x-7 lg:gap-x-10 text-gray-700 font-light tracking-wide text-[13px] sm:text-sm h-auto sm:h-[52px] items-center justify-center py-2 sm:py-0">
+
+      <!-- All Exams -->
+      <li class="relative menu-item" data-menu="all-exams">
+        <button class="cursor-pointer select-none hover:text-examgreen transition whitespace-nowrap link-underline py-2 px-1" aria-expanded="false">
+          All Exams
+        </button>
+        <div class="menu-panel transition-all duration-200">
+          <div class="fixed inset-0 bg-black/10 backdrop-blur-[2px] md:backdrop-blur-[3px] -z-10 hidden md:block"></div>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[min(680px,92vw)]">
+            <div class="rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,.12)]">
+              <div class="grid sm:grid-cols-3 gap-4 p-5">
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('mock-tests')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-clipboard-check"></i></span>
+                  <span><div class="font-semibold text-sm">Mock Tests</div><p class="text-xs text-gray-600 mt-0.5">Full-length & sectional</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('syllabus')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-book-open"></i></span>
+                  <span><div class="font-semibold text-sm">Syllabus & Plans</div><p class="text-xs text-gray-600 mt-0.5">Official PDFs & roadmaps</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('previous-papers')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-file-alt"></i></span>
+                  <span><div class="font-semibold text-sm">Previous Papers</div><p class="text-xs text-gray-600 mt-0.5">With solutions</p></span>
+                </a>
+              </div>
+              <div class="flex items-center justify-between px-5 py-3 border-t border-white/50 bg-white/50 rounded-b-2xl">
+                <div class="text-xs text-gray-600">Explore everything in one place</div>
+                <a href="#" onclick="navigateTo('all-exams')" class="text-xs font-semibold text-green-700 hover:underline">Browse all</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Banking -->
+      <li class="relative menu-item" data-menu="banking">
+        <button class="cursor-pointer select-none hover:text-examgreen transition whitespace-nowrap link-underline py-2 px-1" aria-expanded="false">
+          Banking
+        </button>
+        <div class="menu-panel transition-all duration-200">
+          <div class="fixed inset-0 bg-black/10 backdrop-blur-[2px] md:backdrop-blur-[3px] -z-10 hidden md:block"></div>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[min(680px,92vw)]">
+            <div class="rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,.12)]">
+              <div class="grid sm:grid-cols-3 gap-4 p-5">
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('ibps-po')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-landmark"></i></span>
+                  <span><div class="font-semibold text-sm">IBPS PO & Clerk</div><p class="text-xs text-gray-600 mt-0.5">Prelims & Mains</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo,('sbi')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-university"></i></span>
+                  <span><div class="font-semibold text-sm">SBI Exams</div><p class="text-xs text-gray-600 mt-0.5">PO, Clerk, Apprentice</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('rbi')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-coins"></i></span>
+                  <span><div class="font-semibold text-sm">RBI / NABARD</div><p class="text-xs text-gray-600 mt-0.5">Grade B, Assistants</p></span>
+                </a>
+              </div>
+              <div class="flex items-center justify-between px-5 py-3 border-t border-white/50 bg-white/50 rounded-b-2xl">
+                <div class="text-xs text-gray-600">Practice, PYQs, live analytics</div>
+                <a href="#" onclick="navigateTo('banking')" class="text-xs font-semibold text-green-700 hover:underline">See Banking</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- SSC -->
+      <li class="relative menu-item" data-menu="ssc">
+        <button class="cursor-pointer select-none hover:text-examgreen transition whitespace-nowrap link-underline py-2 px-1" aria-expanded="false">
+          SSC
+        </button>
+        <div class="menu-panel transition-all duration-200">
+          <div class="fixed inset-0 bg-black/10 backdrop-blur-[2px] md:backdrop-blur-[3px] -z-10 hidden md:block"></div>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[min(680px,92vw)]">
+            <div class="rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,.12)]">
+              <div class="grid sm:grid-cols-3 gap-4 p-5">
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('cgl')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-chart-line"></i></span>
+                  <span><div class="font-semibold text-sm">CGL</div><p class="text-xs text-gray-600 mt-0.5">Tier I/II packs</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('chsl')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-layer-group"></i></span>
+                  <span><div class="font-semibold text-sm">CHSL</div><p class="text-xs text-gray-600 mt-0.5">Objective + Typing</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('gd')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-user-shield"></i></span>
+                  <span><div class="font-semibold text-sm">GD Constable</div><p class="text-xs text-gray-600 mt-0.5">Practice + Physical</p></span>
+                </a>
+              </div>
+              <div class="flex items-center justify-between px-5 py-3 border-t border-white/50 bg-white/50 rounded-b-2xl">
+                <div class="text-xs text-gray-600">Latest patterns covered</div>
+                <a href="#" onclick="navigateTo('ssc')" class="text-xs font-semibold text-green-700 hover:underline">See SSC</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- UPSC -->
+      <li class="relative menu-item" data-menu="upsc">
+        <button class="cursor-pointer select-none hover:text-examgreen transition whitespace-nowrap link-underline py-2 px-1" aria-expanded="false">
+          UPSC
+        </button>
+        <div class="menu-panel transition-all duration-200">
+          <div class="fixed inset-0 bg-black/10 backdrop-blur-[2px] md:backdrop-blur-[3px] -z-10 hidden md:block"></div>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[min(680px,92vw)]">
+            <div class="rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,.12)]">
+              <div class="grid sm:grid-cols-3 gap-4 p-5">
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('prelims')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-compass"></i></span>
+                  <span><div class="font-semibold text-sm">Prelims GS & CSAT</div><p class="text-xs text-gray-600 mt-0.5">Daily targets</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('mains')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-pen-nib"></i></span>
+                  <span><div class="font-semibold text-sm">Mains</div><p class="text-xs text-gray-600 mt-0.5">Answer writing</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('optional')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-brain"></i></span>
+                  <span><div class="font-semibold text-sm">Optional Subjects</div><p class="text-xs text-gray-600 mt-0.5">Full courses</p></span>
+                </a>
+              </div>
+              <div class="flex items-center justify-between px-5 py-3 border-t border-white/50 bg-white/50 rounded-b-2xl">
+                <div class="text-xs text-gray-600">Structured prep for UPSC</div>
+                <a href="#" onclick="navigateTo('upsc')" class="text-xs font-semibold text-green-700 hover:underline">See UPSC</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Defence -->
+      <li class="relative menu-item" data-menu="defence">
+        <button class="cursor-pointer select-none hover:text-examgreen transition whitespace-nowrap link-underline py-2 px-1" aria-expanded="false">
+          Defence
+        </button>
+        <div class="menu-panel transition-all duration-200">
+          <div class="fixed inset-0 bg-black/10 backdrop-blur-[2px] md:backdrop-blur-[3px] -z-10 hidden md:block"></div>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[min(680px,92vw)]">
+            <div class="rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,.12)]">
+              <div class="grid sm:grid-cols-3 gap-4 p-5">
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('nda')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-fighter-jet"></i></span>
+                  <span><div class="font-semibold text-sm">NDA</div><p class="text-xs text-gray-600 mt-0.5">Maths & GAT</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('cds')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-parachute-box"></i></span>
+                  <span><div class="font-semibold text-sm">CDS</div><p class="text-xs text-gray-600 mt-0.5">IMA / INA / AFA</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('afcat')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-shield-alt"></i></span>
+                  <span><div class="font-semibold text-sm">AFCAT</div><p class="text-xs text-gray-600 mt-0.5">Tech & Non-Tech</p></span>
+                </a>
+              </div>
+              <div class="flex items-center justify-between px-5 py-3 border-t border-white/50 bg-white/50 rounded-b-2xl">
+                <div class="text-xs text-gray-600">Physical + written prep</div>
+                <a href="#" onclick="navigateTo('defence')" class="text-xs font-semibold text-green-700 hover:underline">See Defence</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Teaching -->
+      <li class="relative menu-item" data-menu="teaching">
+        <button class="cursor-pointer select-none hover:text-examgreen transition whitespace-nowrap link-underline py-2 px-1" aria-expanded="false">
+          Teaching
+        </button>
+        <div class="menu-panel transition-all duration-200">
+          <div class="fixed inset-0 bg-black/10 backdrop-blur-[2px] md:backdrop-blur-[3px] -z-10 hidden md:block"></div>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[min(680px,92vw)]">
+            <div class="rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,.12)]">
+              <div class="grid sm:grid-cols-3 gap-4 p-5">
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('tet')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-chalkboard-teacher"></i></span>
+                  <span><div class="font-semibold text-sm">TET</div><p class="text-xs text-gray-600 mt-0.5">Paper I & II</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('ctet')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-graduation-cap"></i></span>
+                  <span><div class="font-semibold text-sm">CTET</div><p class="text-xs text-gray-600 mt-0.5">Latest pattern</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('dsc')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-user-edit"></i></span>
+                  <span><div class="font-semibold text-sm">DSC/TRB/KVS</div><p class="text-xs text-gray-600 mt-0.5">Complete courses</p></span>
+                </a>
+              </div>
+              <div class="flex items-center justify-between px-5 py-3 border-t border-white/50 bg-white/50 rounded-b-2xl">
+                <div class="text-xs text-gray-600">Bridge concepts to classrooms</div>
+                <a href="#" onclick="navigateTo('teaching')" class="text-xs font-semibold text-green-700 hover:underline">See Teaching</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Others -->
+      <li class="relative menu-item" data-menu="others">
+        <button class="cursor-pointer select-none hover:text-examgreen transition whitespace-nowrap link-underline py-2 px-1" aria-expanded="false">
+          Others
+        </button>
+        <div class="menu-panel transition-all duration-200">
+          <div class="fixed inset-0 bg-black/10 backdrop-blur-[2px] md:backdrop-blur-[3px] -z-10 hidden md:block"></div>
+          <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[min(680px,92vw)]">
+            <div class="rounded-2xl bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,.12)]">
+              <div class="grid sm:grid-cols-3 gap-4 p-5">
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('railway')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-subway"></i></span>
+                  <span><div class="font-semibold text-sm">Railway</div><p class="text-xs text-gray-600 mt-0.5">RRB NTPC/Group D</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('state-exams')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-map-marker-alt"></i></span>
+                  <span><div class="font-semibold text-sm">State Exams</div><p class="text-xs text-gray-600 mt-0.5">PSC/Police/Revenue</p></span>
+                </a>
+                <a class="flex items-start gap-3 rounded-xl p-3 hover:bg-white/60 transition" href="#" onclick="navigateTo('english')">
+                  <span class="w-9 h-9 rounded-lg bg-green-600/15 text-green-700 flex items-center justify-center"><i class="fas fa-language"></i></span>
+                  <span><div class="font-semibold text-sm">English & Aptitude</div><p class="text-xs text-gray-600 mt-0.5">Topic boosters</p></span>
+                </a>
+              </div>
+              <div class="flex items-center justify-between px-5 py-3 border-t border-white/50 bg-white/50 rounded-b-2xl">
+                <div class="text-xs text-gray-600">More categories & bundles</div>
+                <a href="#" onclick="navigateTo('others')" class="text-xs font-semibold text-green-700 hover:underline">See Others</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ====================== HERO ====================== -->
+  <main class="relative bg-grid sweep overflow-hidden">
+    <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-12 md:py-16 lg:py-24">
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <!-- LEFT -->
+        <div>
+          <div class="inline-flex items-center gap-3 bg-[var(--pill)] text-[var(--ink)]/80 rounded-full px-4 py-2 text-sm font-semibold">
+            <span class="inline-flex w-2.5 h-2.5 rounded-full bg-[var(--ink)]/40"></span>
+            <span>250+ trusted partners</span>
+          </div>
+
+          <h1 class="title mt-6">
+            Recruitment process<br />
+            with <span class="accent">smart solutions.</span>
+          </h1>
+
+          <p class="mt-5 text-lg text-[#4d5b57] max-w-2xl">
+            HR Pro is your trusted partner in recruitment, offering personalized HR
+            solutions that connect top talent with the right opportunities.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href="#" class="btn btn-primary">
+              Free consultation
+              <span class="ring-dot">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9 18l6-6-6-6" stroke="#88c19c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+
+            <a href="#" class="btn btn-ghost">
+              Explore our services
+              <span class="inline-flex w-8 h-8 rounded-full border border-[#2e6b59]/30 items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="9" stroke="#2e6b59" stroke-width="1.8"/>
+                </svg>
+              </span>
+            </a>
+            
+          </div>
+        </div>
+
+<!-- ===== Stacked cards with 22s auto "popup/reveal" cycle ===== -->
+<style>
+  /* smooth pop + depth */
+  .photo-card {
+    transition: transform 600ms ease, opacity 600ms ease, filter 600ms ease, box-shadow 600ms ease;
+    transform: translateY(8px) scale(0.985);
+    opacity: 0.85;
+    filter: saturate(0.95);
+    z-index: 0;
+  }
+  .photo-card.is-active {
+    transform: translateY(-8px) scale(1.02);
+    opacity: 1;
+    filter: none;
+    box-shadow:
+      0 10px 30px rgba(255, 0, 0, 0.22),
+      0 2px 12px rgba(0,0,0,.18);
+    z-index: 10;
+  }
+  /* pause when not in view or hovered */
+  .stacked-cards:not(.in-view) .photo-card { transition-duration: 300ms; }
+  .stacked-cards:hover .photo-card { transition-duration: 150ms; }
+
+  /* optional: subtle parallax on mouse */
+  .stacked-cards[data-parallax="on"] .photo-card.is-active:hover {
+    transform: translateY(-10px) scale(1.025);
+  }
+</style>
+
+<div class="relative stacked-cards" id="stackedCards" data-parallax="on" aria-live="polite">
+  <!-- your existing RIGHT column content -->
+  <!-- RIGHT: stacked card group -->
+  <div class="relative">
+
+    <div class="panel p-8 lg:p-10 pr-16">
+      <h3 class="text-white/95 text-3xl font-extrabold tracking-tight">
+        Successfully<br/>connected over<br/>
+        <span class="text-[#9fe0b8]">1,000 businesses</span><br/>with top talent.
+      </h3>
+      <p class="mt-6 text-white/80 leading-relaxed">
+        Reducing hiring time by 30%<br/>and improving team
+        efficiency across industries.
+      </p>
+    </div>
+
+    <!-- Keep your four cards as-is; no class changes needed -->
+    <div class="photo-card absolute -right-2 md:-right-6 -top-10 md:-top-12 w-[78%] min-w-[300px]">
+      <div class="relative">
+        <div class="absolute left-5 top-4 z-10">
+          <span class="photo-badge text-sm">Top rated specialist</span>
+        </div>
+        <img
+          src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop"
+          alt="Sarah Mitchell"
+          class="w-full h-[360px] md:h-[420px] object-cover" />
+        <div class="absolute bottom-0 left-0 right-0 p-5 md:p-6 bg-gradient-to-t from-black/55 to-transparent text-white">
+          <div class="text-lg font-extrabold">Sarah Mitchell</div>
+          <div class="text-sm opacity-90">Talent Acquisition Specialist</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="photo-card absolute -right-2 md:-right-6 -top-10 md:-top-12 w-[78%] min-w-[300px]">
+  <div class="relative">
+    <div class="absolute left-5 top-4 z-10">
+      <span class="photo-badge text-sm">Top rated specialist</span>
+    </div>
+    <img
+      src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop"
+      alt="Sarah Mitchell"
+      class="w-full h-[360px] md:h-[420px] object-cover shift-img" />
+    <div class="absolute bottom-0 left-0 right-0 p-5 md:p-6 bg-gradient-to-t from-black/55 to-transparent text-white">
+      <div class="text-lg font-extrabold">Sarah Mitchell</div>
+      <div class="text-sm opacity-90">Talent Acquisition Specialist</div>
+    </div>
+  </div>
+</div>
+<style>
+  .shift-img {
+  position: relative;
+  left: -8px;
+  top: 6px;
+}
+
+
+</style>
+
+<!-- ===== Enhanced reveal (fade + pop) + gentle auto-scroll ===== -->
+<style>
+  .photo-card {
+    transition:
+      transform 600ms ease,
+      opacity 600ms ease,
+      filter 600ms ease,
+      box-shadow 600ms ease;
+    transform: translateY(6px) scale(0.985);
+    opacity: 0.6;                 /* more “fade in” room */
+    filter: saturate(0.9) contrast(0.98);
+    z-index: 0;
+  }
+  .photo-card.is-active {
+    transform: translateY(-8px) scale(1.02); /* pop */
+    opacity: 1;                              /* fade */
+    filter: none;
+    box-shadow:
+      0 12px 32px rgba(0,0,0,.22),
+      0 3px 14px rgba(0,0,0,.18);
+    z-index: 10;
+  }
+
+  /* optional: slightly quicker when hovering the stack */
+  .stacked-cards:hover .photo-card { transition-duration: 300ms; }
+
+  /* accessibility focus outline if a card ever gets focus */
+  .photo-card:focus-within { outline: 2px dashed #9fe0b8; outline-offset: 6px; }
+</style>
+
+<script>
+  (function () {
+    const wrap = document.getElementById('stackedCards');
+    if (!wrap) return;
+
+    const cards = Array.from(wrap.querySelectorAll('.photo-card'));
+
+    // === Controls (tweak here) ===
+    const TOTAL_CYCLE_MS   = 22000;           // Full rotation: 22s
+    const START_DELAY_MS   = 300;             // Start after entering view
+    const enableAutoScroll = true;            // <— turn off if not wanted
+    const scrollPadding    = 80;              // px breathing room around stack
+    const perCard          = TOTAL_CYCLE_MS / Math.max(cards.length, 1);
+
+    let idx = 0;
+    let timer = null;
+    let inView = false;
+
+    function setActive(i) {
+      cards.forEach((c, j) => {
+        c.classList.toggle('is-active', j === i);
+        c.style.zIndex = j === i ? 10 : (j + 1);
+      });
+      if (enableAutoScroll) maybeAutoScroll();
+      announceActive(cards[i]);
+    }
+
+    function announceActive(card) {
+      const label = card.querySelector('[alt]')?.getAttribute('alt') || 'Card';
+      wrap.setAttribute('aria-label', `Showing ${label}`);
+    }
+
+    function start() {
+      if (timer || !inView) return;
+      setActive(idx);
+      timer = setInterval(() => {
+        idx = (idx + 1) % cards.length;
+        setActive(idx);
+      }, perCard);
+    }
+
+    function stop() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    // Auto-scroll only if the stack is not comfortably in view
+    function maybeAutoScroll() {
+      const rect = wrap.getBoundingClientRect();
+      const viewH = window.innerHeight || document.documentElement.clientHeight;
+
+      const topTooHigh    = rect.top < scrollPadding;
+      const bottomTooLow  = rect.bottom > (viewH - scrollPadding);
+
+      if (topTooHigh || bottomTooLow) {
+        // Scroll just enough to keep it nicely framed
+        const targetY = Math.max(
+          window.scrollY + rect.top - scrollPadding,
+          0
+        );
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+      }
+    }
+
+    // Pause on hover
+    wrap.addEventListener('mouseenter', stop);
+    wrap.addEventListener('mouseleave', start);
+
+    // Start when scrolled into view
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          inView = true;
+          setTimeout(start, START_DELAY_MS);
+        } else {
+          inView = false;
+          stop();
+        }
+      });
+    }, { threshold: 0.3 });
+    io.observe(wrap);
+
+    // Fallback if IO not supported
+    if (!('IntersectionObserver' in window)) {
+      inView = true;
+      setActive(0);
+      start();
+      window.addEventListener('blur', stop);
+      window.addEventListener('focus', start);
+    }
+
+    // Optional: click to jump
+    cards.forEach((card, j) => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        idx = j;
+        setActive(idx);
+      });
+    });
+  })();
+</script>
+
+          
+
+          
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====== Menu Logic ====== -->
+  <script>
+    function navigateTo(id){
+      console.log('navigateTo:', id);
+      // TODO: replace with real router/navigation
+    }
+
+    const items = Array.from(document.querySelectorAll('nav [data-menu]'));
+
+    function openItem(item){ item.classList.add('open'); item.querySelector('button')?.setAttribute('aria-expanded','true'); }
+    function closeItem(item){ item.classList.remove('open'); item.querySelector('button')?.setAttribute('aria-expanded','false'); }
+
+    function unpinAll(except){
+      items.forEach(it => {
+        if (it !== except) { it.removeAttribute('data-pinned'); closeItem(it); }
+      });
+    }
+
+    // Click = pin/unpin; Hover still works via CSS
+    items.forEach(item => {
+      const btn = item.querySelector('button');
+
+      // Click to toggle pin
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pinned = item.getAttribute('data-pinned') === 'true';
+        if (pinned){
+          item.removeAttribute('data-pinned');
+          if (!item.matches(':hover')) closeItem(item);   // if mouse not on it, close now
+        } else {
+          item.setAttribute('data-pinned','true');
+          openItem(item);
+          unpinAll(item);
+        }
+      });
+
+      // When mouse leaves and it isn't pinned, close it
+      item.addEventListener('mouseleave', () => {
+        if (item.getAttribute('data-pinned') !== 'true') closeItem(item);
+      });
+
+      // Ensure open on enter if pinned
+      item.addEventListener('mouseenter', () => {
+        if (item.getAttribute('data-pinned') === 'true') openItem(item);
+      });
+    });
+
+    // Click outside the nav closes everything
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('nav')) {
+        items.forEach(it => { it.removeAttribute('data-pinned'); closeItem(it); });
+      }
+    });
+
+    // ESC key closes all
+    document.addEventListener('keydown', (e)=>{
+      if (e.key === 'Escape'){
+        items.forEach(it => { it.removeAttribute('data-pinned'); closeItem(it); });
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Exam Dodo — Courses & Categories</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons + Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            examgreen: '#42C8B7',
+            examgreenlight: '#42C8B7',
+            examgreendark: '#329d8f',
+            ink: '#0f3a35'
+          },
+          boxShadow: {
+            glow: '0 8px 24px rgba(66,200,183,.18)',
+          },
+          borderRadius: {
+            '2.5xl': '1.25rem'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body{ font-family: "Inter", sans-serif; }
+
+    /* subtle logo ring (same as home) */
+    .logo-ring::before{
+      content:"";
+      position:absolute; inset:-8px;
+      border-radius:999px;
+      background:
+        radial-gradient(60% 60% at 30% 30%, rgba(66,200,183,.25), transparent 60%),
+        radial-gradient(60% 60% at 70% 70%, rgba(50,157,143,.20), transparent 60%);
+      filter: blur(6px);
+      z-index:-1;
+    }
+
+    /* link underline like home */
+    .link-underline{ position:relative; }
+    .link-underline::after{
+      content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0;
+      background:#42C8B7; transition:width .25s ease; border-radius:2px;
+    }
+    .link-underline:hover::after{ width:100%; }
+
+    /* glass wrap */
+    .glass {
+      background: rgba(255,255,255,.6);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.5);
+    }
+
+    /* image skeleton */
+    .course-image.loading{
+      opacity:.75;
+      background: linear-gradient(90deg,#f4f6f5 25%,#e9eeec 50%,#f4f6f5 75%);
+      background-size: 200% 100%;
+      animation: loading 1.4s linear infinite;
+    }
+    @keyframes loading { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    /* sticky sidebar scrollbars */
+    .sidebar-container{ position:sticky; top:1rem; max-height:calc(100vh - 2rem); overflow:auto; }
+    .sidebar-container::-webkit-scrollbar{ width:6px; }
+    .sidebar-container::-webkit-scrollbar-thumb{ background:#bcded8; border-radius:6px; }
+  </style>
+</head>
+<body class="bg-white text-black">
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Services – Round & Connected</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Minimal extras (ring animation + helpers) -->
+  <style>
+    /* SVG progress ring animation */
+    @keyframes ringFill {
+      from { stroke-dashoffset: 276; }
+      to   { stroke-dashoffset: 0; }
+    }
+    .ai-ring circle.ai-progress { stroke-dasharray: 276; stroke-dashoffset: 276; }
+    .group:hover .ai-ring circle.ai-progress { animation: ringFill 900ms ease forwards; }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-white to-green-50/30 text-gray-900 antialiased">
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Combined Container</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50">
+    <!-- ====================== COMBINED SERVICES CONTAINER ====================== -->
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Services – Quick Access</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Bubble ensures perfect circle logos */
+    .bubble {
+      width: 6rem;    /* bigger circle */
+      height: 6rem;
+      border-radius: 9999px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+    }
+    .bubble img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* ensures logo fills circle */
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
+
+  <section class="w-full min-h-[40vh] px-4 md:px-8 py-12">
+    <div class="max-w-[1440px] mx-auto">
+      <h3 class="text-3xl md:text-4xl font-extrabold mb-10 text-center tracking-wide text-gray-800">
+        Our Services
+      </h3>
+
+      <!-- Round Cards Grid -->
+      <div class="mb-16">
+        <h4 class="text-xl md:text-2xl font-bold mb-8 text-center text-gray-700">Quick Access</h4>
+
+        <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-8" role="list">
+
+          <!-- TNPSC -->
+          <li class="flex flex-col items-center text-center group">
+            <div class="bubble bg-gradient-to-tr from-green-100 to-green-200 shadow-md group-hover:scale-110 transition-transform duration-300">
+              <img src="https://storage.googleapis.com/a1aa/image/0df2ad97-374e-44dc-9b6a-4033979fc803.jpg" alt="TNPSC" />
+            </div>
+            <h4 class="mt-3 text-sm md:text-base font-bold text-green-800">TNPSC</h4>
+          </li>
+
+          <!-- RRB -->
+          <li class="flex flex-col items-center text-center group">
+            <div class="bubble bg-gradient-to-tr from-blue-100 to-blue-200 shadow-md group-hover:scale-110 transition-transform duration-300">
+              <img src="https://storage.googleapis.com/a1aa/image/78aae34c-f813-42c7-8eef-b469910240d0.jpg" alt="RRB" />
+            </div>
+            <h4 class="mt-3 text-sm md:text-base font-bold text-blue-800">RRB</h4>
+          </li>
+
+          <!-- Banking -->
+          <li class="flex flex-col items-center text-center group">
+            <div class="bubble bg-gradient-to-tr from-yellow-100 to-yellow-200 shadow-md group-hover:scale-110 transition-transform duration-300">
+              <img src="https://storage.googleapis.com/a1aa/image/6a759728-f460-4390-fd26-e5988f830735.jpg" alt="Banking" />
+            </div>
+            <h4 class="mt-3 text-sm md:text-base font-bold text-yellow-800">Banking</h4>
+          </li>
+
+          <!-- SSC -->
+          <li class="flex flex-col items-center text-center group">
+            <div class="bubble bg-gradient-to-tr from-purple-100 to-purple-200 shadow-md group-hover:scale-110 transition-transform duration-300">
+              <img src="https://storage.googleapis.com/a1aa/image/45632d8b-6e78-4a56-3b53-81d7665c36e6.jpg" alt="SSC" />
+            </div>
+            <h4 class="mt-3 text-sm md:text-base font-bold text-purple-800">SSC</h4>
+          </li>
+
+          <!-- UPSC -->
+          <li class="flex flex-col items-center text-center group">
+            <div class="bubble bg-gradient-to-tr from-red-100 to-red-200 shadow-md group-hover:scale-110 transition-transform duration-300">
+              <img src="https://storage.googleapis.com/a1aa/image/af5c737c-f4bd-47d4-3577-a2d4ddd719b6.jpg" alt="UPSC" />
+            </div>
+            <h4 class="mt-3 text-sm md:text-base font-bold text-red-800">UPSC</h4>
+          </li>
+
+          <!-- Defence -->
+          <li class="flex flex-col items-center text-center group">
+            <div class="bubble bg-gradient-to-tr from-indigo-100 to-indigo-200 shadow-md group-hover:scale-110 transition-transform duration-300">
+              <img src="https://storage.googleapis.com/a1aa/image/b3abd4d9-c271-4e16-29e4-ec0e614f64f7.jpg" alt="Defence" />
+            </div>
+            <h4 class="mt-3 text-sm md:text-base font-bold text-indigo-800">Defence</h4>
+          </li>
+
+          <!-- More -->
+          <li class="flex flex-col items-center text-center group">
+            <div class="bubble bg-gradient-to-tr from-teal-100 to-teal-200 shadow-md group-hover:scale-110 transition-transform duration-300">
+              <span class="text-xl font-bold text-teal-700">+</span>
+            </div>
+            <h4 class="mt-3 text-sm md:text-base font-bold text-teal-800">More</h4>
+          </li>
+
+          <!-- All Exams -->
+          <li class="flex flex-col items-center text-center group">
+            <div class="bubble bg-gradient-to-tr from-orange-100 to-orange-200 shadow-md group-hover:scale-110 transition-transform duration-300">
+              <span class="text-sm font-bold text-white bg-orange-500 w-full h-full flex items-center justify-center">All</span>
+            </div>
+            <h4 class="mt-3 text-sm md:text-base font-bold text-orange-800">All Exams</h4>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
+
+
+            <!-- Detailed Cards Grid -->
+            <div>
+                <h4 class="text-xl md:text-2xl font-bold mb-8 text-center text-gray-700">Detailed Services</h4>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6" role="list">
+                    <!-- TNPSC -->
+                    <li>
+                        <a href="/tnpsc" data-id="tnpsc"
+                           class="group block cursor-pointer rounded-2xl p-5 bg-white/80 backdrop-blur-md shadow-lg hover:shadow-xl border border-gray-200 hover:border-green-400 transition-all duration-300 text-center focus:outline-none focus:ring-2 focus:ring-green-400 hover:scale-105">
+                            <div class="service-bubble relative mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-tr from-green-100 to-green-200 shadow-inner group-hover:scale-105 transition-transform duration-300" data-title="TNPSC Prep">
+                                <img src="https://storage.googleapis.com/a1aa/image/0df2ad97-374e-44dc-9b6a-4033979fc803.jpg" alt="TNPSC" class="w-14 h-14 object-contain"/>
+                            </div>
+                            <h4 class="mt-4 text-sm md:text-base font-bold text-green-800">TNPSC Prep</h4>
+                           
+                        </a>
+                    </li>
+
+                    <!-- RRB -->
+                    <li>
+                        <a href="/rrb" data-id="rrb" class="group block cursor-pointer rounded-2xl p-5 bg-white/80 backdrop-blur-md shadow-lg hover:shadow-xl border border-gray-200 hover:border-blue-400 transition-all duration-300 text-center focus:outline-none focus:ring-2 focus:ring-blue-400 hover:scale-105">
+                            <div class="service-bubble relative mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-tr from-blue-100 to-blue-200 shadow-inner group-hover:scale-105 transition-transform duration-300" data-title="RRB Prep">
+                                <img src="https://storage.googleapis.com/a1aa/image/78aae34c-f813-42c7-8eef-b469910240d0.jpg" alt="RRB" class="w-14 h-14 object-contain"/>
+                            </div>
+                            <h4 class="mt-4 text-sm md:text-base font-bold text-blue-800">RRB Prep</h4>
+                            <p class="mt-2 text-xs md:text-sm text-gray-600 leading-snug">Railway exam plans, topic tests & full-length <br mocks.</p>
+                        </a>
+                    </li>
+
+                    <!-- Banking -->
+                    <li>
+                        <a href="/banking" data-id="banking" class="group block cursor-pointer rounded-2xl p-5 bg-white/80 backdrop-blur-md shadow-lg hover:shadow-xl border border-gray-200 hover:border-yellow-400 transition-all duration-300 text-center focus:outline-none focus:ring-2 focus:ring-yellow-400 hover:scale-105">
+                            <div class="service-bubble relative mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-tr from-yellow-100 to-yellow-200 shadow-inner group-hover:scale-105 transition-transform duration-300" data-title="Banking Prep">
+                                <img src="https://storage.googleapis.com/a1aa/image/6a759728-f460-4390-fd26-e5988f830735.jpg" alt="Banking" class="w-14 h-14 object-contain"/>
+                            </div>
+                            <h4 class="mt-4 text-sm md:text-base font-bold text-yellow-800">Banking Prep</h4>
+                            <p class="mt-2 text-xs md:text-sm text-gray-600 leading-snug">IBPS, SBI, RBI readiness with smart practice flows.</p>
+                        </a>
+                    </li>
+
+                    <!-- SSC -->
+                    <li>
+                        <a href="/ssc" data-id="ssc" class="group block cursor-pointer rounded-xl p-5 bg-white/80 backdrop-blur-md shadow-lg hover:shadow-xl border border-gray-200 hover:border-purple-400 transition-all duration-300 text-center focus:outline-none focus:ring-2 focus:ring-purple-400 hover:scale-105">
+                            <div class="service-bubble relative mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-tr from-purple-100 to-purple-200 shadow-inner group-hover:scale-105 transition-transform duration-300" data-title="SSC Prep">
+                                <img src="https://storage.googleapis.com/a1aa/image/45632d8b-6e78-4a56-3b53-81d7665c36e6.jpg" alt="SSC" class="w-14 h-14 object-contain"/>
+                            </div>
+                            <h4 class="mt-4 text-sm md:text-base font-bold text-purple-800">SSC Prep</h4>
+                        </a>
+                    </li>
+
+                    <!-- UPSC -->
+                    <li>
+                        <a href="/upsc" data-id="upsc" class="group block cursor-pointer rounded-2xl p-5 bg-white/80 backdrop-blur-md shadow-lg hover:shadow-xl border border-gray-200 hover:border-red-400 transition-all duration-300 text-center focus:outline-none focus:ring-2 focus:ring-red-400 hover:scale-105">
+                            <div class="service-bubble relative mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-tr from-red-100 to-red-200 shadow-inner group-hover:scale-105 transition-transform duration-300" data-title="UPSC Prep">
+                                <img src="https://storage.googleapis.com/a1aa/image/af5c737c-f4bd-47d4-3577-a2d4ddd719b6.jpg" alt="UPSC" class="w-14 h-14 object-contain"/>
+                            </div>
+                            <h4 class="mt-4 text-sm md:text-base font-bold text-red-800">UPSC Prep</h4>
+                            <p class="mt-2 text-xs md:text-sm text-gray-600 leading-snug">Prelims to Mains with curated notes & test series.</p>
+                        </a>
+                    </li>
+
+                    <!-- Defence -->
+                    <li>
+                        <a href="/defence" data-id="defence" class="group block cursor-pointer rounded-2xl p-5 bg-white/80 backdrop-blur-md shadow-lg hover:shadow-xl border border-gray-200 hover:border-indigo-400 transition-all duration-300 text-center focus:outline-none focus:ring-2 focus:ring-indigo-400 hover:scale-105">
+                            <div class="service-bubble relative mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-tr from-indigo-100 to-indigo-200 shadow-inner group-hover:scale-105 transition-transform duration-300" data-title="Defence Prep">
+                                <img src="https://storage.googleapis.com/a1aa/image/b3abd4d9-c271-4e16-29e4-ec0e614f64f7.jpg" alt="Defence" class="w-14 h-14 object-contain"/>
+                            </div>
+                            <h4 class="mt-4 text-sm md:text-base font-bold text-indigo-800">Defence Prep</h4>
+                            <p class="mt-2 text-xs md:text-sm text-gray-600 leading-snug">NDA, CDS, AFCAT coverage with SSB interview drills.</p>
+                        </a>
+                    </li>
+
+                   
+
+
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Add interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const bubbles = document.querySelectorAll('.service-bubble');
+            
+            bubbles.forEach(bubble => {
+                bubble.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.1) rotate(5deg)';
+                });
+                
+                bubble.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+  <!-- ===== JS: Add AI ring + initials fallback (no design change) ===== -->
+  <script>
+    // Create ring SVG element
+    function makeRing() {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'ai-ring absolute inset-0');
+      svg.setAttribute('viewBox', '0 0 44 44');
+      const base = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      base.setAttribute('cx', '22'); base.setAttribute('cy', '22'); base.setAttribute('r', '20');
+      base.setAttribute('fill', 'none'); base.setAttribute('stroke', 'rgba(16,185,129,0.15)'); base.setAttribute('stroke-width', '4');
+      const prog = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      prog.setAttribute('class', 'ai-progress'); prog.setAttribute('cx', '22'); prog.setAttribute('cy', '22'); prog.setAttribute('r', '20');
+      prog.setAttribute('fill', 'none'); prog.setAttribute('stroke', 'rgb(16,185,129)'); prog.setAttribute('stroke-width', '4'); prog.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(base); svg.appendChild(prog);
+      return svg;
+    }
+
+    // Make initials from a title like "GATE Prep" -> "GP"
+    function initialsFrom(title) {
+      return (title || 'AI')
+        .trim()
+        .split(/\s+/)
+        .map(w => w[0] || '')
+        .join('')
+        .slice(0,3)
+        .toUpperCase() || 'AI';
+    }
+
+    function ensureAiLogo(bubble) {
+      // Add ring if not present
+      if (!bubble.querySelector('.ai-ring')) {
+        bubble.prepend(makeRing());
+      }
+      // Add initials span if not present
+      let logo = bubble.querySelector('.ai-logo');
+      if (!logo) {
+        logo = document.createElement('span');
+        logo.className = 'ai-logo z-[1] text-green-900 font-extrabold tracking-wider';
+        // responsive sizing
+        logo.classList.add('text-lg','md:text-xl');
+        bubble.appendChild(logo);
+      }
+      // Set initials
+      const title = bubble.getAttribute('data-title') ||
+                    bubble.closest('li,a')?.querySelector('h4')?.textContent ||
+                    'AI';
+      logo.textContent = initialsFrom(title);
+    }
+
+    // For every service icon bubble:
+    document.querySelectorAll('.service-bubble').forEach(bubble => {
+      const img = bubble.querySelector('img');
+
+      // Force AI logo if data-use-ai="true"
+      const forceAI = bubble.getAttribute('data-use-ai') === 'true';
+
+      if (forceAI || !img) {
+        if (img) img.remove();
+        ensureAiLogo(bubble);
+        return;
+      }
+
+      // If image fails, switch to AI logo
+      img.addEventListener('error', () => {
+        img.remove();
+        ensureAiLogo(bubble);
+      });
+
+      // Optional: if image is empty src or blocked by CORS, also fallback after a tick
+      if (!img.getAttribute('src')) {
+        ensureAiLogo(bubble);
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+<!-- ============== Page Transition Overlay (fade) ============== -->
+<div id="pageTransition"
+     class="fixed inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-300 z-[9999]"></div>
+
+<script>
+  // Optional: map IDs to actual URLs if your slugs differ
+  const ROUTE_MAP = {
+    tnpsc: "/tnpsc",
+    rrb: "/rrb",
+    banking: "/banking",
+    ssc: "/ssc",
+    upsc: "/upsc",
+    defence: "/defence",
+    teaching: "/teaching",
+    others: "/other-exams",
+  };
+
+  // Smooth fade-out then navigate
+  const overlay = document.getElementById('pageTransition');
+
+  function go(url) {
+    overlay.classList.remove('pointer-events-none');
+    overlay.classList.add('opacity-100');
+    setTimeout(() => { window.location.href = url; }, 260);
+  }
+
+  // Intercept clicks on service cards (works even inside Elementor)
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a[data-id]');
+    if (!anchor) return;
+    // If you want to force using ROUTE_MAP, uncomment next line
+    const id = anchor.getAttribute('data-id');
+    const mapped = ROUTE_MAP[id] || anchor.getAttribute('href') || '#';
+    // Prevent default hard jump to apply transition
+    e.preventDefault();
+    go(mapped);
+  });
+
+  // Optional: show a gentle "float" on pointer move
+  const cards = document.querySelectorAll('a[data-id]');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+      card.style.transform = `translateY(-2px) rotateX(${dy * -4}deg) rotateY(${dx * 4}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+</script>
+
+<!-- Tailwind CDN (skip if already included) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<section class="bg-[#f5f5f7]">
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+    
+    <!-- Left Text -->
+    <h1 class="text-3xl sm:text-5xl font-light leading-snug text-gray-700 max-w-2xl">
+      <span class="font-semibold text-black">Store.</span> 
+      The best way to buy the products you love.
+    </h1>
+
+    <!-- Right Links -->
+    <div class="flex flex-col gap-6 text-sm sm:text-base">
+      
+      <!-- Item 1 -->
+      <div class="flex items-center gap-3">
+        <img 
+          src="https://randomuser.me/api/portraits/women/44.jpg" 
+          alt="Specialist" 
+          class="w-10 h-10 rounded-full object-cover"
+        />
+        <div>
+          <p class="text-gray-800 font-medium">Need shopping help?</p>
+          <a href="#" class="text-blue-600 hover:underline">Ask a Specialist →</a>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300">
+          <!-- Apple Pin Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 384 512">
+            <path d="M192 0C86 0 0 86 0 192c0 77.4 59.9 141.2 136 150.5V480c0 17.7 14.3 32 32 32s32-14.3 32-32V342.5c76.1-9.3 136-73.1 136-150.5C384 86 298 0 192 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-800 font-medium">Visit an Apple Store</p>
+          <a href="#" class="text-blue-600 hover:underline">Find one near you →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+  <main class="relative overflow-hidden">
+    <!-- Decorative grid background like home -->
+    
+
+    <div class="relative">
+
+      <!-- ====================== PROMO SLIDER (content preserved, styled to match) ====================== -->
+      <section class="max-w-[1150px] mx-auto mt-6 md:mt-10 px-3 sm:px-4 md:px-6 lg:px-8">
+  <div id="slider"
+       class="relative rounded-2.5xl overflow-hidden bg-gradient-to-r from-[#0f3a35] to-[#164a43] flex flex-col md:flex-row items-center justify-between shadow-[0_20px_60px_rgba(0,0,0,.12)]"
+       style="min-height:200px">
+
+    <!-- LEFT -->
+    <div class="p-5 md:p-8 flex-1 w-full md:max-w-[50%] flex flex-col gap-2 md:gap-3 text-center md:text-left">
+      <h2 id="slider-title" class="text-[#9fe0b8] font-extrabold text-xl md:text-3xl lg:text-4xl leading-tight drop-shadow-sm">
+        Save up to ₹1,000* extra
+      </h2>
+      <p id="slider-subtitle" class="text-white/90 text-sm sm:text-base font-medium">
+        on exam preparation courses
+      </p>
+
+      <div class="inline-flex items-center gap-2 rounded-full border border-amber-300 text-amber-300 px-3 py-1.5 w-max shadow bg-amber-900/20 backdrop-blur-sm text-xs sm:text-sm mx-auto md:mx-0">
+        <span>USE CODE:</span><span class="font-extrabold text-sm sm:text-base">EXAM10</span>
+      </div>
+
+      <button id="slider-button" type="button" onclick="bookCourse()"
+        class="mt-3 md:mt-4 w-max rounded-full px-5 md:px-6 py-2 font-semibold text-ink bg-white hover:bg-[#e8efe9] border border-white/60 transition mx-auto md:mx-0">
+        Book Course
+      </button>
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="relative flex-1 w-full md:max-w-[50%] flex justify-center items-center">
+      <!-- Aspect ratio wrapper to ensure perfect fit without cropping -->
+      <div class="relative w-full aspect-[4/3] md:aspect-[16/9] bg-[#0f3a35]">
+        <img
+          id="slider-image"
+          src="Thumbnail design.jpeg"
+          alt="3D clay-style young professional with laptop, pastel tones, floating UI dashboard cards"
+          class="absolute inset-0 w-full h-full object-contain p-3 md:p-4"
+        />
+      </div>
+
+      <div class="absolute bottom-2 right-3 text-[10px] text-white/70 select-none">*T&amp;C Apply</div>
+
+      <!-- arrows -->
+      <button aria-label="Previous slide" id="prev-slide"
+        class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center text-ink shadow-md transition">
+        <i class="fas fa-chevron-left text-sm"></i>
+      </button>
+      <button aria-label="Next slide" id="next-slide"
+        class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center text-ink shadow-md transition">
+        <i class="fas fa-chevron-right text-sm"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- dots -->
+  <div id="slider-dots" class="flex justify-center mt-3 gap-2"></div>
+</section>
+
+
+      <!-- ====================== IMPACT CARDS (content preserved, colors harmonized) ====================== -->
+      <section class="max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-12 md:py-16 lg:py-20">
+        <header class="text-center mb-10 md:mb-14 lg:mb-16">
+          <h2 class="font-extrabold text-ink" style="font-size:clamp(28px,4.5vw,64px);letter-spacing:-.02em;line-height:1.05">
+            See the difference we’re<br class="hidden md:block" /> making by the numbers
+          </h2>
+          <p class="mt-5 max-w-3xl mx-auto text-[#4d5b57]">
+            Together, we can make a real impact in communities around the world.
+            Help us bring hope and support.
+          </p>
+        </header>
+
+        <div class="grid gap-6 md:gap-8 lg:gap-10 md:grid-cols-2">
+          <!-- Peach -->
+          <article class="relative rounded-2.5xl overflow-hidden" style="background:#FF8E72; box-shadow:0 20px 60px rgba(0,0,0,.08);">
+            <div class="p-6 sm:p-8 md:p-10 lg:p-12">
+              <div class="flex items-center gap-3 text-black/80">
+                <span class="w-7 h-7 rounded-lg bg-white shadow-inner"></span>
+                <span class="text-xl md:text-2xl font-semibold tracking-tight">BY 2023</span>
+              </div>
+              <div class="mt-6 md:mt-8">
+                <div class="font-extrabold text-black" style="font-size:clamp(44px,7.2vw,96px);line-height:.95;letter-spacing:-.02em">
+                  $12Million
+                </div>
+              </div>
+              <p class="mt-5 md:mt-6 text-[17px] leading-7 text-black/80 max-w-2xl">
+                This funding has been crucial in expanding our programs, improving
+                resources, and reaching more communities in impactful need.
+              </p>
+            </div>
+            <svg class="absolute left-0 right-0 bottom-0" viewBox="0 0 1200 280" preserveAspectRatio="none">
+              <path d="M0,200 C260,110 620,160 1200,240 L1200,280 L0,280 Z" fill="url(#peachGrad)"/>
+              <defs>
+                <linearGradient id="peachGrad" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#FFB49E"/>
+                  <stop offset="100%" stop-color="#FF9E84"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </article>
+
+          <!-- Lemon -->
+          <article class="relative rounded-2.5xl overflow-hidden" style="background:#FFE07A; box-shadow:0 20px 60px rgba(0,0,0,.08);">
+            <div class="p-6 sm:p-8 md:p-10 lg:p-12">
+              <div class="flex items-center gap-3 text-black/80">
+                <span class="w-7 h-7 rounded-lg bg-white shadow-inner"></span>
+                <span class="text-xl md:text-2xl font-semibold tracking-tight">BY 2023</span>
+              </div>
+              <div class="mt-6 md:mt-8">
+                <div class="font-extrabold text-black" style="font-size:clamp(44px,7.2vw,96px);line-height:.95;letter-spacing:-.02em">
+                  139,875+
+                </div>
+              </div>
+              <p class="mt-5 md:mt-6 text-[17px] leading-7 text-black/80 max-w-2xl">
+                From providing access to education and healthcare to ensuring food
+                security and clean water, these efforts are changing lives.
+              </p>
+            </div>
+            <svg class="absolute left-0 right-0 bottom-0" viewBox="0 0 1200 280" preserveAspectRatio="none">
+              <path d="M0,210 C300,130 720,170 1200,235 L1200,280 L0,280 Z" fill="url(#lemonGrad)"/>
+              <defs>
+                <linearGradient id="lemonGrad" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#FFEAA6"/>
+                  <stop offset="100%" stop-color="#FFD95C"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </article>
+        </div>
+      </section>
+
+      <!-- ====================== TESTIMONIALS (content preserved, style matched) ====================== -->
+      <section class="max-w-6xl mx-auto px-5 md:px-8 pb-16 md:pb-20">
+        <header class="text-center mb-12 md:mb-16">
+          <h2 class="font-extrabold text-ink" style="font-size:clamp(32px,5vw,48px);letter-spacing:-.02em">
+            What our students say.
+          </h2>
+          <p class="mt-4 max-w-3xl mx-auto text-[#4d5b57]">
+            At Edux, our courses are meticulously curated and delivered by a network of highly skilled
+            trainers who are experts in their respective fields. Each trainer at Edux.
+          </p>
+        </header>
+
+        <div class="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <!-- Card template (6 items from your content) -->
+          <article class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img class="h-12 w-12 rounded-full object-cover" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Annette Black"/>
+                <div>
+                  <div class="font-semibold text-ink">Annette Black</div>
+                  <div class="text-sm text-gray-500">@annette black</div>
+                </div>
+              </div>
+              <span class="w-9 h-9 rounded-full bg-ink text-white grid place-items-center text-sm font-bold">x</span>
+            </div>
+            <p class="mt-5 leading-7 text-gray-700">
+              "Edux has redefined my learning journey. The courses are extensive, and the flexibility
+              helps me seamlessly balance my studies."
+            </p>
+          </article>
+
+          <article class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img class="h-12 w-12 rounded-full object-cover" src="https://randomuser.me/api/portraits/men/45.jpg" alt="Devon Lane"/>
+                <div>
+                  <div class="font-semibold text-ink">Devon Lane</div>
+                  <div class="text-sm text-gray-500">@devon lane</div>
+                </div>
+              </div>
+              <span class="w-9 h-9 rounded-full bg-ink text-white grid place-items-center text-sm font-bold">x</span>
+            </div>
+            <p class="mt-5 leading-7 text-gray-700">
+              "Edux has revolutionized the way I learn. The courses are in-depth, and the flexibility
+              enables me to effortlessly manage my studies."
+            </p>
+          </article>
+
+          <article class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img class="h-12 w-12 rounded-full object-cover" src="https://randomuser.me/api/portraits/women/26.jpg" alt="Jenny Wilson"/>
+                <div>
+                  <div class="font-semibold text-ink">Jenny Wilson</div>
+                  <div class="text-sm text-gray-500">@jenny wilson</div>
+                </div>
+              </div>
+              <span class="w-9 h-9 rounded-full bg-ink text-white grid place-items-center text-sm font-bold">x</span>
+            </div>
+            <p class="mt-5 leading-7 text-gray-700">
+              "Edux has reshaped how I approach learning. The courses are comprehensive, and the
+              flexibility makes it easy to manage my studies."
+            </p>
+          </article>
+
+          <article class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img class="h-12 w-12 rounded-full object-cover" src="https://randomuser.me/api/portraits/men/71.jpg" alt="Robert Fox"/>
+                <div>
+                  <div class="font-semibold text-ink">Robert Fox</div>
+                  <div class="text-sm text-gray-500">@robert fox</div>
+                </div>
+              </div>
+              <span class="w-9 h-9 rounded-full bg-ink text-white grid place-items-center text-sm font-bold">x</span>
+            </div>
+            <p class="mt-5 leading-7 text-gray-700">
+              "Edux has transformed the way I learn. The courses are comprehensive, and the flexibility
+              allows me to balance my studies."
+            </p>
+          </article>
+
+          <article class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img class="h-12 w-12 rounded-full object-cover" src="https://randomuser.me/api/portraits/men/33.jpg" alt="Wade Warren"/>
+                <div>
+                  <div class="font-semibold text-ink">Wade Warren</div>
+                  <div class="text-sm text-gray-500">@wade warren</div>
+                </div>
+              </div>
+              <span class="w-9 h-9 rounded-full bg-ink text-white grid place-items-center text-sm font-bold">x</span>
+            </div>
+            <p class="mt-5 leading-7 text-gray-700">
+              "Edux has completely transformed my learning experience. The courses are thorough,
+              and the flexible schedule allows me to balance."
+            </p>
+          </article>
+
+          <article class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img class="h-12 w-12 rounded-full object-cover" src="https://randomuser.me/api/portraits/women/58.jpg" alt="Bake Adam"/>
+                <div>
+                  <div class="font-semibold text-ink">Bake Adam</div>
+                  <div class="text-sm text-gray-500">@bake adam</div>
+                </div>
+              </div>
+              <span class="w-9 h-9 rounded-full bg-ink text-white grid place-items-center text-sm font-bold">x</span>
+            </div>
+            <p class="mt-5 leading-7 text-gray-700">
+              "Edux has revolutionized the way I learn. The courses are comprehensive, and the flexible
+              schedule makes it easy to balance."
+            </p>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+
+
+
+  <!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet"/>
+
+<style>
+  :root{
+    --ink:#0F201B;        /* headline dark */
+    --accent:#2D5F53;     /* green highlight */
+    --pill:#1D3F36;       /* dark button */
+    --pill-soft:#DFF5CC;  /* light button bg */
+  }
+  body{ font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial; color: var(--ink); }
+  .huge{
+    letter-spacing:-.02em;
+    font-weight: 900;
+    font-size: clamp(34px, 7vw, 96px);
+    line-height: 1.05;
+  }
+  .ring-seal{
+    width: 180px; height: 180px;
+    border-radius: 999px;
+    border: 3px solid #234B40;
+    display:grid; place-items:center;
+  }
+  .avatar-circle{
+    width: 220px; height: 220px;
+    border-radius: 999px;
+    background: radial-gradient(120% 120% at 30% 20%, #E8F5F0 0%, #F3F8F6 60%, #ffffff 100%);
+    display:grid; place-items:center;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0,0,0,.08);
+  }
+  .btn{
+    border-radius: 999px;
+    padding: 18px 28px;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body class="bg-white">
+
+<section class="relative overflow-hidden">
+  <!-- corner doodles -->
+  <svg class="hidden md:block absolute left-8 bottom-16 w-16 h-16 text-[#214D42]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 20l-1-5 10-10 5 1-10 10-4 4z"/><path d="M3.5 15.5l5 5"/></svg>
+  <svg class="hidden md:block absolute right-20 bottom-14 w-28 h-20 text-[#214D42]" viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="28" height="36" rx="4"/><rect x="34" y="6" width="28" height="36" rx="4"/><path d="M9 20c3 3 6 3 9 0m28 0c3 3 6 3 9 0"/></svg>
+
+  <div class="max-w-[1200px] mx-auto px-5 md:px-10 pt-10 md:pt-16 lg:pt-24 pb-14 md:pb-20">
+    <!-- top row: avatar left, seal right -->
+    <div class="relative h-40 md:h-0">
+      <div class="absolute -left-1 md:left-0 -top-2 md:-top-10">
+        <div class="avatar-circle">
+          <!-- replace with your own transparent PNG/WebP if you have -->
+          <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=600&auto=format&fit=crop"
+               alt="student"
+               class="w-[92%] h-[92%] object-cover rounded-full"/>
+        </div>
+      </div>
+
+      <div class="absolute right-0 -top-6 md:-top-10">
+        <div class="ring-seal">
+          <!-- inner logo -->
+          <div class="w-14 h-14 rounded-lg grid place-items-center bg-[#214D42] text-white">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 13l8-8 8 8-8 8-8-8z" fill="white" opacity=".92"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <!-- headline -->
+    <h1 class="huge text-center mt-24 md:mt-0">
+      Find <span class="text-[var(--accent)]">best</span> courses from<br class="hidden md:block" />
+      the best <span class="text-[var(--accent)]">mentors</span>.
+    </h1>
+
+    <!-- sub copy -->
+    <p class="max-w-4xl mx-auto text-center text-[17px] md:text-xl text-[#707F7A] mt-6 leading-8">
+      Finding suitable courses from the best mentors is essential for anyone looking to excel in their field. The
+      right course, guided by an expert mentor, can provide invaluable insights, practical skills
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex flex-wrap gap-4 justify-center mt-9">
+      <a href="#" class="btn bg-[var(--pill)] text-white hover:opacity-95 transition">
+        Request A Free Demo
+      </a>
+      <a href="#" class="btn bg-[var(--pill-soft)] text-[#17382F] hover:brightness-95 transition">
+        Contact Us Now
+      </a>
+    </div>
+  </div>
+</section>
+
+  <!-- ====================== SCRIPTS ====================== -->
+  <script>
+    // Simple navigation stub
+    function navigateTo(path){ console.log('navigate:', path); }
+    function bookCourse(){ console.log('book course'); }
+
+    // ===== Slider data (your original content preserved) =====
+    const slides = [
+      {
+        title: "Save up to ₹1,000* extra",
+        subtitle: "on exam preparation courses",
+        image: "Screenshot 2025-08-22 at 8.50.17 PM.png",
+        alt: "Students studying with books and laptops preparing for competitive exams",
+        buttonText: "Book Course",
+        buttonAction: () => {}
+      },
+      {
+        title: "New UPSC Batch Starting Soon",
+        subtitle: "Enroll now to secure your seat",
+        image: "Screenshot 2025-08-22 at 8.50.17 PM.png",
+        alt: "Students attending UPSC coaching class with books and notes",
+        buttonText: "Enroll Now",
+        buttonAction: () => {}
+      },
+      {
+        title: "SSC Practice Tests Available",
+        subtitle: "Test your skills with our mock exams",
+        image: "Screenshot 2025-08-22 at 8.50.17 PM.png",
+        alt: "Students taking SSC practice tests on laptops",
+        buttonText: "Start Testing",
+        buttonAction: () => {}
+      },
+      {
+        title: "Banking Exam Tips & Tricks",
+        subtitle: "Boost your preparation with expert advice",
+        image: "Screenshot 2025-08-22 at 8.50.17 PM.png",
+        alt: "Banking exam preparation with notes and calculator",
+        buttonText: "Learn More",
+        buttonAction: () => {}
+      }
+    ];
+
+    // Slider refs
+    let currentSlide = 0;
+    const sliderTitle = document.getElementById("slider-title");
+    const sliderSubtitle = document.getElementById("slider-subtitle");
+    const sliderImage = document.getElementById("slider-image");
+    const sliderButton = document.getElementById("slider-button");
+    const sliderDots = document.getElementById("slider-dots");
+
+    function updateSlide(index){
+      const s = slides[index];
+      sliderTitle.textContent = s.title;
+      sliderSubtitle.textContent = s.subtitle;
+      sliderImage.src = s.image;
+      sliderImage.alt = s.alt;
+      sliderButton.textContent = s.buttonText;
+      sliderButton.onclick = s.buttonAction;
+      currentSlide = index;
+      updateDots();
+    }
+    function updateDots(){
+      sliderDots.innerHTML = "";
+      slides.forEach((_, i) => {
+        const dot = document.createElement("span");
+        dot.className =
+          "h-1 rounded-full inline-block cursor-pointer transition-all " +
+          (i === currentSlide ? "w-8 bg-examgreendark" : "w-5 bg-examgreen/50");
+        dot.addEventListener("click", () => updateSlide(i));
+        sliderDots.appendChild(dot);
+      });
+    }
+    document.getElementById("prev-slide").addEventListener("click", () => {
+      updateSlide((currentSlide - 1 + slides.length) % slides.length);
+    });
+    document.getElementById("next-slide").addEventListener("click", () => {
+      updateSlide((currentSlide + 1) % slides.length);
+    });
+  updateSlide(0);
+</script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Product Categories and Courses with Fixed Sidebar</title>
+
+  <!-- Tailwind CDN is fine for local/dev; use a build for production -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+    body { font-family: "Inter", sans-serif; }
+
+    body.bg-app { background: #f6f8fb; }
+    nav.cat-panel { background: transparent; }
+
+    .frame {
+      border: 1px solid rgba(0,0,0,0.9);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(214,234,255,0.5), rgba(210,247,240,0.5));
+    }
+
+    .sidebar-container { position: sticky; top: 1rem; height: fit-content; max-height: calc(100vh - 2rem); overflow-y: auto; }
+    .sidebar-container::-webkit-scrollbar { width: 3px; }
+    .sidebar-container::-webkit-scrollbar-thumb { background-color: rgb(0,59,90); border-radius: 3px; }
+
+    .course-image { transition: opacity 0.3s ease; }
+    .course-image.loading {
+      opacity: 0.7;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+    @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-app min-h-screen">
+  <div class="p-4 sm:p-5 md:p-8">
+    <main class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
+      <!-- Fixed Sidebar -->
+      <aside class="w-full lg:w-64 lg:flex-shrink-0">
+        <div class="sidebar-container">
+          <nav class="p-2 cat-panel frame -ml-1 lg:-ml-2" aria-label="Course Categories">
+            <h2 class="text-lg font-bold text-green-900 mb-1">Categories</h2>
+            <div id="category-buttons" class="flex flex-col divide-y divide-gray-300"></div>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <section class="flex-1 min-w-0">
+        <header class="mb-4">
+          <div class="flex flex-wrap items-center gap-3 justify-between">
+            <h1 id="category-title" class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0f172a]">
+              Select a Category
+            </h1>
+
+            <!-- PACK FILTER BUTTONS -->
+            <div class="flex flex-wrap gap-2" id="pack-filters" role="tablist" aria-label="Pack Filters"></div>
+          </div>
+        </header>
+        
+        <!-- Courses frame -->
+        <div class="frame p-3 sm:p-4">
+          <div id="products-container" class="w-full">
+            <div class="max-h-[calc(100vh-120px)] overflow-y-auto">
+              <div id="products-grid" 
+                   class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5"
+                   role="list" aria-live="polite" aria-atomic="true">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // ------------------ DATA ------------------
+    var categories = [
+      "Most Popular","Generative AI","AI & Machine Learning","Data Science & Business Analytics",
+      "Project Management","Cyber Security","Agile and Scrum","Cloud Computing & DevOps",
+      "Business and Leadership","Software Development","Product and Design",
+      "IT Service and Architecture","Quality Management","Digital Marketing"
+    ];
+
+    var TAG_STYLES = {
+      "Advance":   "bg-purple-50 border border-purple-600 text-purple-700",
+      "Live Class":"bg-green-50 border border-green-600 text-green-700",
+      "24 Class":  "bg-sky-50 border border-sky-600 text-sky-700",
+      "Beginner":  "bg-emerald-50 border border-emerald-600 text-emerald-700"
+    };
+
+    var PACK_STYLES = {
+      "Trending": "bg-rose-50 border border-rose-600 text-rose-700",
+      "Gold":     "bg-amber-50 border border-amber-600 text-amber-800",
+      "Silver":   "bg-slate-50 border border-slate-600 text-slate-700",
+      "Platinum": "bg-violet-50 border border-violet-600 text-violet-700"
+    };
+
+    var PACK_FILTERS = ["All", "Trending", "Gold", "Silver", "Platinum"];
+
+    // Default/fallback images
+    var DEFAULT_IMAGES = [
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=280&h=160&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=280&h=160&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=280&h=160&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=280&h=160&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=280&h=160&fit=crop&crop=center"
+    ];
+
+    var categoryImages = {
+      "Most Popular": [
+        "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=280&h=160&fit=crop&crop=center"
+      ],
+      "Generative AI": [
+        "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1676299081847-824916de030a?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1675557009862-4b8668e66203?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1676573409013-8f844b7b0de8?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1675789652875-4d8e50c682b2?w=280&h=160&fit=crop&crop=center"
+      ],
+      "AI & Machine Learning": [
+        "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=280&h=160&fit=crop&crop=center"
+      ],
+      "Data Science & Business Analytics": [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1590402494756-6c6e3e9cdc71?w=280&h=160&fit=crop&crop=center"
+      ],
+      "Project Management": [
+        "https://images.unsplash.com/photo-1552664730-d307ca884978?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1542744095-291d1f67b221?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=280&h=160&fit=crop&crop=center"
+      ],
+      "Cyber Security": [
+        "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=280&h=160&fit=crop&crop=center"
+      ],
+      "Agile and Scrum": [
+        "https://images.unsplash.com/photo-1552581234-26160f608093?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1515378791036-0648a814c963?w=280&h=160&fit=crop&crop=center"
+      ],
+      "Cloud Computing & DevOps": [
+        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1525373612132-b3e820b87cd9?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=280&h=160&fit=crop&crop=center"
+      ],
+      "Business and Leadership": [
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1542744095-291d1f67b221?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=280&h=160&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=280&h=160&fit=crop&crop=center"
+      ]
+    };
+
+    // Build dummy data safely
+    var coursesData = {};
+    var packCycle = ["Trending","Gold","Silver","Platinum"];
+
+    categories.forEach(function (cat) {
+      coursesData[cat] = [];
+      var imgs = (Array.isArray(categoryImages[cat]) && categoryImages[cat].length) ? categoryImages[cat] : DEFAULT_IMAGES;
+
+      for (var i = 1; i <= 25; i++) {
+        var pack = packCycle[(i - 1) % packCycle.length];
+        var imageUrl = imgs[(i - 1) % imgs.length] || DEFAULT_IMAGES[0];
+        coursesData[cat].push({
+          id: i,
+          title: cat + " Course " + i,
+          description: "This is a detailed description for " + cat + " Course " + i + ". Learn all about " + cat.toLowerCase() + " in this comprehensive course.",
+          pack: pack,
+          tags: ["Advance","Live Class","24 Class"],
+          imageUrl: imageUrl
+        });
+      }
+    });
+
+    // ------------------ DOM ------------------
+    var categoryButtonsContainer = document.getElementById("category-buttons");
+    var productsGrid = document.getElementById("products-grid");
+    var categoryTitle = document.getElementById("category-title");
+    var packFiltersEl = document.getElementById("pack-filters");
+
+    // Category buttons
+    categories.forEach(function (cat, index) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = cat;
+      btn.className = "bg-transparent text-[#0f172a] py-3 px-3 text-sm text-left w-full hover:bg-white/50 transition-all duration-200";
+      btn.setAttribute("aria-pressed", "false");
+
+      btn.addEventListener("click", function () {
+        categoryButtonsContainer.querySelectorAll("button").forEach(function (b) {
+          b.className = "bg-transparent text-[#0f172a] py-3 px-3 text-sm text-left w-full hover:bg-white/50 transition-all duration-200";
+          b.setAttribute("aria-pressed", "false");
+        });
+
+        btn.className = "bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-3 text-sm font-semibold text-left w-full shadow transition-all duration-200";
+        btn.setAttribute("aria-pressed", "true");
+
+        categoryTitle.textContent = cat;
+        renderCourses(cat);
+
+        var scroller = document.querySelector("#products-container > div");
+        if (scroller) { scroller.scrollTop = 0; }
+      });
+
+      categoryButtonsContainer.appendChild(btn);
+      if (index === 0) { setTimeout(function () { btn.click(); }, 0); }
+    });
+
+    // Pack filters
+    var currentPackFilter = "All";
+    function buildPackFilters() {
+      packFiltersEl.innerHTML = "";
+      PACK_FILTERS.forEach(function (label) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.textContent = label;
+        b.className =
+          "px-3 py-1.5 text-sm bg-transparent border border-black/70 rounded-[10px] " +
+          "hover:bg-white/50 transition-colors " +
+          (label === currentPackFilter ? "font-semibold" : "font-medium");
+        b.setAttribute("role","tab");
+        b.setAttribute("aria-selected", (label === currentPackFilter ? "true" : "false"));
+
+        b.addEventListener("click", function () {
+          currentPackFilter = label;
+          Array.prototype.slice.call(packFiltersEl.children).forEach(function (el) {
+            el.setAttribute("aria-selected","false");
+            el.classList.remove("font-semibold");
+            el.classList.add("font-medium");
+          });
+          b.setAttribute("aria-selected","true");
+          b.classList.remove("font-medium");
+          b.classList.add("font-semibold");
+          renderCourses(categoryTitle.textContent);
+        });
+
+        packFiltersEl.appendChild(b);
+      });
+    }
+    buildPackFilters();
+
+    // Render courses
+    function renderCourses(category) {
+      productsGrid.innerHTML = "";
+      var courses = coursesData[category] || [];
+      if (currentPackFilter !== "All") {
+        courses = courses.filter(function (c) { return c.pack === currentPackFilter; });
+      }
+
+      courses.forEach(function (course) {
+        var article = document.createElement("article");
+        article.className =
+          "border border-black/70 hover:border-2 hover:border-black transition-all duration-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md flex flex-col h-full bg-white/10 backdrop-blur-[5px]";
+
+        // Image
+        var imgDiv = document.createElement("div");
+        imgDiv.className = "relative";
+        var img = document.createElement("img");
+        img.src = course.imageUrl || DEFAULT_IMAGES[0];
+        img.alt = course.title + " image";
+        img.className = "w-full h-36 object-cover course-image loading";
+        img.loading = "lazy";
+        img.addEventListener("load", function(){ this.classList.remove("loading"); });
+        img.addEventListener("error", function() {
+          this.src = "https://via.placeholder.com/280x160/6366f1/ffffff?text=" + encodeURIComponent(course.title);
+          this.classList.remove("loading");
+        });
+        imgDiv.appendChild(img);
+
+        // PACK chip
+        var packChip = document.createElement("div");
+        var packStyle = PACK_STYLES[course.pack] || "bg-gray-50 border border-gray-600 text-gray-700";
+        packChip.className = "absolute bottom-3 right-3 " + packStyle + " text-xs font-semibold rounded-lg px-3 py-1.5 select-none shadow-sm backdrop-blur-sm";
+        packChip.textContent = course.pack;
+        imgDiv.appendChild(packChip);
+
+        // Content
+        var contentDiv = document.createElement("div");
+        contentDiv.className = "p-4 flex flex-col flex-1";
+
+        var h3 = document.createElement("h3");
+        h3.className = "font-semibold text-[15px] mb-2 leading-snug cursor-pointer text-[#0f172a] hover:text-green-700 transition-colors line-clamp-2";
+        h3.textContent = course.title;
+        h3.tabIndex = 0;
+        h3.setAttribute("role", "button");
+        h3.setAttribute("aria-label", "View details for " + course.title);
+        h3.addEventListener("click", function () {
+          alert(
+            "Course Selected:\n\nTitle: " + course.title +
+            "\n\nPack: " + course.pack +
+            "\n\nDescription: " + course.description +
+            "\n\nTags: " + course.tags.join(", ")
+          );
+        });
+        h3.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); h3.click(); }
+        });
+
+        var pDesc = document.createElement("p");
+        pDesc.className = "text-sm text-gray-700/90 mb-3 leading-relaxed line-clamp-2 flex-1";
+        pDesc.textContent = course.description;
+
+        var tagsDiv = document.createElement("div");
+        tagsDiv.className = "flex gap-2 mb-3 items-center flex-nowrap overflow-x-auto no-scrollbar";
+        tagsDiv.addEventListener("wheel", function (e) {
+          if (e.deltaY !== 0) { tagsDiv.scrollLeft += e.deltaY; e.preventDefault(); }
+        });
+        course.tags.forEach(function (tag) {
+          var span = document.createElement("span");
+          var style = TAG_STYLES[tag] || "bg-gray-50 border border-gray-600 text-gray-700";
+          span.className = "text-[11px] rounded-md px-2 py-0.5 font-semibold select-none whitespace-nowrap " + style;
+          span.textContent = tag;
+          tagsDiv.appendChild(span);
+        });
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "w-full bg-white/70 border border-black/70 text-gray-900 text-sm font-semibold rounded-lg px-4 py-2.5 cursor-pointer hover:bg-white hover:border-black transition-colors duration-200";
+        btn.textContent = "Enroll Now";
+        btn.addEventListener("click", function () {
+          alert("You have enrolled in:\n\n" + course.title + " (" + course.pack + ")");
+        });
+
+        contentDiv.appendChild(h3);
+        contentDiv.appendChild(pDesc);
+        contentDiv.appendChild(tagsDiv);
+        contentDiv.appendChild(btn);
+
+        article.appendChild(imgDiv);
+        article.appendChild(contentDiv);
+        productsGrid.appendChild(article);
+      });
+
+      if (!courses.length) {
+        var empty = document.createElement("div");
+        empty.className = "col-span-full text-center text-sm text-gray-600 py-6";
+        empty.textContent = "No courses in " + currentPackFilter + " pack for \"" + category + "\".";
+        productsGrid.appendChild(empty);
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Exam Dodo — Clean Merge + MongoDB-style Hero</title>
+
+  <!-- Tailwind (once) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons + Fonts (once) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            examgreen: '#42C8B7',
+            examgreenlight: '#42C8B7',
+            examgreendark: '#329d8f',
+            ink: '#0f3a35'
+          },
+          boxShadow: {
+            glow: '0 8px 24px rgba(66,200,183,.18)',
+          },
+          borderRadius:{ '2.5xl':'1.25rem' }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root{
+      --ink:#0f3a35;
+      --ink-2:#184a44;
+      --mint:#eaf2ef;
+      --pill:#e9eee6;
+      --cta:#163f39;
+      --cta-ring:#88c19c;
+    }
+    body{ font-family:"Inter","Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:#fff; color:#122220 }
+
+    /* Shared bits you already used */
+    .logo-ring::before{
+      content:""; position:absolute; inset:-8px; border-radius:999px;
+      background:
+        radial-gradient(60% 60% at 30% 30%, rgba(66,200,183,.25), transparent 60%),
+        radial-gradient(60% 60% at 70% 70%, rgba(50,157,143,.20), transparent 60%);
+      filter: blur(6px); z-index:-1;
+    }
+    .link-underline{ position:relative; }
+    .link-underline::after{
+      content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0;
+      background:#42C8B7; transition:width .25s ease; border-radius:2px;
+    }
+    .link-underline:hover::after{ width:100%; }
+
+    /* ===== MONGODB-STYLE HERO (scoped) ===== */
+    .ai-hero{
+      --bg0:#0b2b29; --bg1:#0e3834; --brand:#1ed760; --brand-ink:#0c5f33;
+      --card:#fff; --radius:28px; --ring:rgba(30,215,96,.45);
+      background:
+        radial-gradient(1200px 600px at 70% -10%, #103c38 0%, #0d3230 40%, #0b2b29 70%, #081f1e 100%) fixed,
+        linear-gradient(120deg,var(--bg0),var(--bg1));
+      color:#e8f3f1;
+    }
+    .ai-hero .shell{ display:grid; grid-template-columns:1fr minmax(540px,820px); gap:clamp(24px,4vw,40px); align-items:stretch; }
+    @media (max-width:1000px){ .ai-hero .shell{ grid-template-columns:1fr } }
+    .ai-hero .eyebrow{ color:var(--brand); font-weight:800; font-size:clamp(16px,2.2vw,20px); letter-spacing:.5px; margin-bottom:10px; }
+    .ai-hero .title{ font-weight:800; font-size:clamp(36px,5vw,54px); line-height:1.02; letter-spacing:-.02em }
+    .ai-hero .title .accent{ color:var(--brand) }
+    .ai-hero .lede{ margin-top:18px; max-width:42ch; color:#c9e1dd; font-size:clamp(16px,2.2vw,18px) }
+    .ai-hero .hero-cta{
+      display:inline-flex; align-items:center; gap:10px; margin-top:28px;
+      color:#dff7f0; text-decoration:none; font-weight:600;
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+      padding:12px 16px; border-radius:999px; transition:.25s ease;
+    }
+    .ai-hero .hero-cta:hover{ transform:translateY(-1px); box-shadow:0 10px 30px rgba(0,0,0,.25) }
+
+    .ai-hero .rail{ position:relative; isolation:isolate; padding:10px 0 48px }
+    .ai-hero .viewport{ overflow:hidden; border-radius:calc(var(--radius) + 12px) }
+    .ai-hero .track{ display:flex; gap:24px; padding:8px; scroll-behavior:smooth }
+    .ai-hero .card{
+      flex:0 0 520px; max-width:520px; background:var(--card); color:#0c2826;
+      border-radius:var(--radius); box-shadow:0 20px 60px rgba(0,0,0,.35);
+      border:1px solid rgba(12,50,46,.06); overflow:hidden; display:flex; flex-direction:column;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .ai-hero .card:hover{ transform:translateY(-4px); box-shadow:0 30px 80px rgba(0,0,0,.35) }
+    @media (max-width:640px){ .ai-hero .card{ flex-basis:88%; max-width:88% } }
+    .ai-hero .art{ background:linear-gradient(180deg,#f6faf8,#eaf6f2 55%,#e6f4ef); padding:36px 28px 18px; display:grid; place-items:center }
+    .ai-hero .card h3{ margin:0 0 6px; font-size:clamp(20px,2.4vw,26px); line-height:1.2; color:#0c2826 }
+    .ai-hero .card p{ margin:12px 0 0; color:#587774; font-size:15.5px }
+    .ai-hero .link{ display:inline-flex; align-items:center; gap:10px; margin-top:20px; color:var(--brand-ink); font-weight:650; text-decoration:none }
+    .ai-hero .btn{
+      display:grid; place-items:center; width:54px;height:54px; border-radius:50%;
+      background:var(--brand); color:#062a19; box-shadow:0 10px 20px var(--ring);
+      border:none; cursor:pointer; transition: transform .2s ease;
+    }
+    .ai-hero .btn:active{ transform:translateY(1px) scale(.98) }
+    .ai-hero .prev{ position:absolute; top:50%; left:-12px; transform:translateY(-50%) }
+    .ai-hero .next{ position:absolute; top:50%; right:-12px; transform:translateY(-50%) }
+    @media (max-width:640px){ .ai-hero .prev{ left:6px } .ai-hero .next{ right:6px } }
+    .ai-hero .dots{
+      position:absolute; left:6px; bottom:6px; display:flex; gap:10px; padding:10px 14px;
+      background:rgba(0,0,0,.18); border:1px solid rgba(255,255,255,.1); border-radius:999px; backdrop-filter: blur(6px);
+    }
+    .ai-hero .dot{ width:8px;height:8px;border-radius:50%; background:rgba(255,255,255,.4); opacity:.6; transition:all .2s }
+    .ai-hero .dot.is-active{ width:28px;border-radius:999px; background:#fff; opacity:1 }
+
+    /* Your stacked-cards improvements (de-duped) */
+    .photo-card{
+      transition: transform 600ms ease, opacity 600ms ease, filter 600ms ease, box-shadow 600ms ease;
+      transform: translateY(6px) scale(0.985);
+      opacity: .6;
+      filter: saturate(.9) contrast(.98);
+      z-index:0;
+    }
+    .photo-card.is-active{
+      transform: translateY(-8px) scale(1.02);
+      opacity:1; filter:none;
+      box-shadow: 0 12px 32px rgba(0,0,0,.22), 0 3px 14px rgba(0,0,0,.18);
+      z-index:10;
+    }
+    .shift-img{ position:relative; left:-8px; top:6px; }
+  </style>
+</head>
+<body class="text-black">
+
+
+
+
+  <!-- ====================== YOUR EXISTING STACKED CARDS (kept) ====================== -->
+  <!-- (Paste your stacked-cards section here if you want it below the new hero) -->
+
+  <!-- ====================== SERVICES (kept) ====================== -->
+  <!-- (Paste your Services section here exactly as you had it) -->
+
+  <!-- ====== JS (menu + hero slider) ====== -->
+  <script>
+    function navigateTo(id){ console.log('navigateTo:', id); }
+
+    // ========== MongoDB-style hero slider (scoped) ==========
+    (function(){
+      const viewport = document.getElementById('aiViewport');
+      const track    = document.getElementById('aiTrack');
+      if(!viewport || !track) return;
+
+      const cards = Array.from(track.children);
+      const prev  = document.getElementById('aiPrev');
+      const next  = document.getElementById('aiNext');
+      const dotsWrap = document.getElementById('aiDots');
+
+      // build dots
+      cards.forEach((_,i)=>{
+        const d=document.createElement('div');
+        d.className='dot'+(i===0?' is-active':'');
+        d.dataset.i=i;
+        d.setAttribute('role','tab');
+        d.setAttribute('aria-selected', i===0 ? 'true':'false');
+        dotsWrap.appendChild(d);
+      });
+      const dots = Array.from(dotsWrap.children);
+
+      let index=0;
+      const scrollToIndex=(i,smooth=true)=>{
+        index=Math.max(0,Math.min(i,cards.length-1));
+        const card=cards[index];
+        const offset = card.offsetLeft - 8; // track padding
+        viewport.scrollTo({ left: offset, behavior: smooth?'smooth':'auto' });
+        dots.forEach((d,di)=>{
+          d.classList.toggle('is-active', di===index);
+          d.setAttribute('aria-selected', di===index ? 'true':'false');
+        });
+      };
+
+      next.addEventListener('click', ()=>scrollToIndex(index+1));
+      prev.addEventListener('click', ()=>scrollToIndex(index-1));
+      dots.forEach(d=> d.addEventListener('click', ()=>scrollToIndex(+d.dataset.i)));
+
+      // sync when dragging
+      let raf;
+      const sync=()=>{
+        cancelAnimationFrame(raf);
+        raf=requestAnimationFrame(()=>{
+          const center=viewport.scrollLeft + viewport.clientWidth*0.2;
+          let nearest=0, best=Infinity;
+          cards.forEach((c,i)=>{
+            const dx=Math.abs(center - c.offsetLeft);
+            if(dx<best){ best=dx; nearest=i; }
+          });
+          if(nearest!==index){
+            index=nearest;
+            dots.forEach((d,di)=>d.classList.toggle('is-active', di===index));
+          }
+        });
+      };
+      viewport.addEventListener('scroll', sync, {passive:true});
+      window.addEventListener('load', ()=>scrollToIndex(0,false));
+      new ResizeObserver(()=>scrollToIndex(index,false)).observe(viewport);
+    })();
+
+    // ========== Your mega-menu logic (kept, simplified attach points) ==========
+    (function(){
+      const items = Array.from(document.querySelectorAll('nav [data-menu]'));
+      const openItem = it=>{ it.classList.add('open'); it.querySelector('button')?.setAttribute('aria-expanded','true'); }
+      const closeItem= it=>{ it.classList.remove('open'); it.querySelector('button')?.setAttribute('aria-expanded','false'); }
+      const unpinAll = except => items.forEach(it=>{ if(it!==except){ it.removeAttribute('data-pinned'); closeItem(it); } });
+
+      items.forEach(item=>{
+        const btn=item.querySelector('button');
+        btn?.addEventListener('click', e=>{
+          e.preventDefault();
+          const pinned=item.getAttribute('data-pinned')==='true';
+          if(pinned){ item.removeAttribute('data-pinned'); if(!item.matches(':hover')) closeItem(item); }
+          else { item.setAttribute('data-pinned','true'); openItem(item); unpinAll(item); }
+        });
+        item.addEventListener('mouseleave', ()=>{ if(item.getAttribute('data-pinned')!=='true') closeItem(item); });
+        item.addEventListener('mouseenter', ()=>{ if(item.getAttribute('data-pinned')==='true') openItem(item); });
+      });
+      document.addEventListener('click', e=>{ if(!e.target.closest('nav')) items.forEach(it=>{ it.removeAttribute('data-pinned'); closeItem(it); }); });
+      document.addEventListener('keydown', e=>{ if(e.key==='Escape') items.forEach(it=>{ it.removeAttribute('data-pinned'); closeItem(it); }); });
+    })();
+
+    // ========== Stacked-cards auto-cycle (de-duped, optional) ==========
+    (function(){
+      const wrap = document.getElementById('stackedCards');
+      if(!wrap) return;
+      const cards = Array.from(wrap.querySelectorAll('.photo-card'));
+      const TOTAL_CYCLE_MS=22000, START_DELAY_MS=300, enableAutoScroll=true, scrollPadding=80;
+      const perCard = TOTAL_CYCLE_MS / Math.max(cards.length,1);
+
+      let idx=0, timer=null, inView=false;
+
+      function setActive(i){
+        cards.forEach((c,j)=>{ c.classList.toggle('is-active', j===i); c.style.zIndex = j===i ? 10 : (j+1); });
+        if(enableAutoScroll) maybeAutoScroll();
+        const label = cards[i].querySelector('[alt]')?.getAttribute('alt') || 'Card';
+        wrap.setAttribute('aria-label', `Showing ${label}`);
+      }
+      function start(){ if(timer||!inView) return; setActive(idx); timer=setInterval(()=>{ idx=(idx+1)%cards.length; setActive(idx); }, perCard); }
+      function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+      function maybeAutoScroll(){
+        const rect = wrap.getBoundingClientRect(), viewH = innerHeight;
+        const topTooHigh = rect.top < scrollPadding, bottomTooLow = rect.bottom > (viewH - scrollPadding);
+        if(topTooHigh || bottomTooLow){
+          const targetY = Math.max(scrollY + rect.top - scrollPadding, 0);
+          scrollTo({ top: targetY, behavior:'smooth' });
+        }
+      }
+      wrap.addEventListener('mouseenter', stop);
+      wrap.addEventListener('mouseleave', start);
+      const io = new IntersectionObserver((ents)=>ents.forEach(entry=>{
+        if(entry.isIntersecting){ inView=true; setTimeout(start, START_DELAY_MS); }
+        else { inView=false; stop(); }
+      }), {threshold:.3});
+      io.observe(wrap);
+      if(!('IntersectionObserver' in window)){ inView=true; setActive(0); start(); addEventListener('blur', stop); addEventListener('focus', start); }
+      cards.forEach((card,j)=>{ card.style.cursor='pointer'; card.addEventListener('click', ()=>{ idx=j; setActive(idx); }); });
+    })();
+  </script>
+</body>
+</html>
+
+
+<style>
+  :root{
+    --k-green:#12B46B;     /* footer green */
+    --k-green-dark:#0F9A5B;
+    --k-ink:#0E1A14;       /* dark text */
+    --k-cta:#F7C54A;       /* CTA yellow */
+  }
+  body{ font-family:"Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial }
+  .card-xxl{ border-radius: 36px; }
+  .btn-pill{ border-radius: 16px; }
+  .shadow-smooth{ box-shadow: 0 20px 50px rgba(0,0,0,.12); }
+  .beam:after{
+    /* soft diagonal beams on the CTA bg */
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(105deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 35%) 0% 20%/120% 45% no-repeat,
+      linear-gradient(105deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 45%) 10% 65%/120% 45% no-repeat;
+    pointer-events:none;
+    border-radius:inherit;
+  }
+</style>
+</head>
+<body class="bg-white text-[var(--k-ink)]">
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Exam Dodo Footer</title>
+  
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Icons + Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            examgreen: '#42C8B7',
+            examgreenlight: '#42C8B7',
+            examgreendark: '#329d8f',
+            ink: '#0f3a35'
+          },
+          boxShadow: {
+            glow: '0 8px 24px rgba(66,200,183,.18)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    
+    .footer-gradient {
+      background: linear-gradient(135deg, #0f3a35 0%, #164a43 50%, #329d8f 100%);
+    }
+
+      .footer-gradient-menu {
+      background: linear-gradient(135deg, hwb(176 17% 48%) 0%, #3cb5a5 50%, #329d8f 100%);
+    }
+    
+    
+    .cta-gradient {
+      background: linear-gradient(135deg, #42C8B7 0%, #329d8f 100%);
+    }
+    
+    .beam::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(105deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 35%) 0% 20%/120% 45% no-repeat,
+        linear-gradient(105deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 45%) 10% 65%/120% 45% no-repeat;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50">
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Logo + Brand Slider</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{ font-family: Inter, system-ui, sans-serif; }
+
+  /* auto-scroll animation */
+  @keyframes logosSlide {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .logos-track {
+    display: flex;
+    gap: 5rem;
+    will-change: transform;
+    animation: logosSlide 50s linear infinite;
+  }
+  .logos-wrapper {
+    overflow: hidden;
+    cursor: grab;
+  }
+  .logos-wrapper:active { cursor: grabbing; }
+
+  .fade-mask {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  }
+
+  /* logo item */
+  .logo {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  /* THIN variant */
+  .thin .icon { border: 2px solid #222; color:#111; }
+  .thin span { color:#111; font-weight:600; }
+
+  /* COLOR variants */
+  .color.teal .icon { background:#0d9488; color:white; }
+  .color.teal span { color:#0d9488; }
+  .color.blue .icon { background:#2563eb; color:white; }
+  .color.blue span { color:#2563eb; }
+  .color.rose .icon { background:#e11d48; color:white; }
+  .color.rose span { color:#e11d48; }
+
+  /* GRADIENT */
+  .grad .icon {
+    background: linear-gradient(135deg,#22c55e,#3b82f6);
+    color:white;
+  }
+  .grad span {
+    background: linear-gradient(135deg,#22c55e,#3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight:800;
+  }
+</style>
+</head>
+<body class="bg-white">
+
+<section class="max-w-[1220px] mx-auto px-5 md:px-8 py-10">
+  <h3 class="text-xl font-semibold mb-6">Our Trusted Brands</h3>
+  <div class="relative fade-mask">
+    <div id="logosWrapper" class="logos-wrapper">
+      <div id="logosTrack" class="logos-track">
+        <!-- One loop -->
+        <div class="logo thin"><div class="icon">B</div><span>Brandify</span></div>
+        <div class="logo color teal"><div class="icon">A</div><span>AlphaTech</span></div>
+        <div class="logo grad"><div class="icon">N</div><span>NexaSoft</span></div>
+        <div class="logo color blue"><div class="icon">C</div><span>Cloudify</span></div>
+        <div class="logo color rose"><div class="icon">S</div><span>Shopora</span></div>
+
+        <!-- Duplicate for infinite effect -->
+        <div class="logo thin"><div class="icon">B</div><span>Brandify</span></div>
+        <div class="logo color teal"><div class="icon">A</div><span>AlphaTech</span></div>
+        <div class="logo grad"><div class="icon">N</div><span>NexaSoft</span></div>
+        <div class="logo color blue"><div class="icon">C</div><span>Cloudify</span></div>
+        <div class="logo color rose"><div class="icon">S</div><span>Shopora</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const wrapper = document.getElementById("logosWrapper");
+  const track = document.getElementById("logosTrack");
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  function pauseAnim(){ track.style.animationPlayState = "paused"; }
+  function resumeAnim(){ track.style.animationPlayState = "running"; }
+
+  // Mouse
+  wrapper.addEventListener("mousedown", (e)=>{
+    isDown = true;
+    startX = e.pageX - wrapper.offsetLeft;
+    scrollLeft = wrapper.scrollLeft;
+    pauseAnim();
+  });
+  wrapper.addEventListener("mouseleave", ()=>{ isDown=false; resumeAnim(); });
+  wrapper.addEventListener("mouseup", ()=>{ isDown=false; resumeAnim(); });
+  wrapper.addEventListener("mousemove", (e)=>{
+    if(!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - wrapper.offsetLeft;
+    const walk = (x - startX) * 1.2;
+    wrapper.scrollLeft = scrollLeft - walk;
+  });
+
+  // Touch
+  wrapper.addEventListener("touchstart",(e)=>{
+    isDown=true; startX=e.touches[0].pageX; scrollLeft=wrapper.scrollLeft; pauseAnim();
+  });
+  wrapper.addEventListener("touchend",()=>{ isDown=false; resumeAnim(); });
+  wrapper.addEventListener("touchmove",(e)=>{
+    if(!isDown) return;
+    const x=e.touches[0].pageX;
+    const walk=(x-startX)*1.2;
+    wrapper.scrollLeft=scrollLeft-walk;
+  });
+</script>
+
+
+
+
+<style>
+  body{ font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial }
+</style>
+</head>
+<body class="bg-white text-[#121212]">
+
+<section class="max-w-[1200px] mx-auto px-4 md:px-8 py-10 md:py-14">
+  <!-- Header row -->
+  <div class="flex items-center justify-between gap-4">
+    <h2 class="text-[36px] sm:text-[42px] md:text-[56px] font-extrabold leading-[1.1] tracking-tight">
+      Podcast & Publications
+    </h2>
+
+    <a href="#"
+       class="inline-flex items-center gap-3 bg-[#27AE60] text-white rounded-full px-5 sm:px-6 py-3 sm:py-4 shadow-[0_12px_28px_rgba(39,174,96,.25)] hover:brightness-95 transition">
+      <span class="font-semibold">View more</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Cards -->
+  <div class="mt-8 md:mt-10 grid gap-6 md:gap-7 lg:gap-8 grid-cols-1 md:grid-cols-2">
+    <!-- Card component (repeat) -->
+    <!-- 1 -->
+    <article class="group relative rounded-[22px] border border-[#e9edef] bg-white shadow-sm hover:shadow-[0_14px_40px_rgba(0,0,0,.06)] transition">
+      <!-- floating arrow (hidden until hover) -->
+      <a href="#" aria-label="Open"
+         class="absolute left-1/2 -translate-x-1/2 -top-7 opacity-0 scale-75 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300">
+        <span class="grid place-items-center w-14 h-14 rounded-full bg-[#28B463] text-white shadow-[0_10px_24px_rgba(40,180,99,.35)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+
+      <div class="p-6 sm:p-7 md:p-8 lg:p-9 rounded-[22px] group-hover:bg-[#EAF7EF] transition">
+        <div class="flex items-start gap-5">
+          <!-- green circle icon -->
+          <span class="grid place-items-center w-12 h-12 rounded-full bg-[#1CD760]">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="8" fill="white"/>
+              <path d="M12 7v5l3 3" stroke="#1CD760" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <div class="min-w-0">
+            <h3 class="text-[22px] sm:text-[24px] font-extrabold">
+              Thirthy days get a Jobs
+            </h3>
+            <p class="mt-2 text-[#28B463] font-semibold inline-flex items-center gap-2">
+              Self help
+              <span class="text-[#9aa5a0]">•</span>
+              <span class="text-[#9aa5a0] font-semibold">12 Episodes</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="group relative rounded-[22px] border border-[#e9edef] bg-white shadow-sm hover:shadow-[0_14px_40px_rgba(0,0,0,.06)] transition">
+      <a href="#" aria-label="Open"
+         class="absolute left-1/2 -translate-x-1/2 -top-7 opacity-0 scale-75 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300">
+        <span class="grid place-items-center w-14 h-14 rounded-full bg-[#28B463] text-white shadow-[0_10px_24px_rgba(40,180,99,.35)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <div class="p-6 sm:p-7 md:p-8 lg:p-9 rounded-[22px] group-hover:bg-[#EAF7EF] transition">
+        <div class="flex items-start gap-5">
+          <!-- black square icon -->
+          <span class="grid place-items-center w-12 h-12 rounded-[10px] bg-black text-white">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M5 16V8h6l4 4v4H5zM11 8v4h4" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <div class="min-w-0">
+            <h3 class="text-[22px] sm:text-[24px] font-extrabold">
+              Open letter for fresh graduate
+            </h3>
+            <p class="mt-2 text-[#28B463] font-semibold inline-flex items-center gap-2">
+              Self help
+              <span class="text-[#9aa5a0]">•</span>
+              <span class="text-[#9aa5a0] font-semibold">12 Episodes</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="group relative rounded-[22px] border border-[#e9edef] bg-white shadow-sm hover:shadow-[0_14px_40px_rgba(0,0,0,.06)] transition">
+      <a href="#" aria-label="Open"
+         class="absolute left-1/2 -translate-x-1/2 -top-7 opacity-0 scale-75 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300">
+        <span class="grid place-items-center w-14 h-14 rounded-full bg-[#28B463] text-white shadow-[0_10px_24px_rgba(40,180,99,.35)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <div class="p-6 sm:p-7 md:p-8 lg:p-9 rounded-[22px] group-hover:bg-[#EAF7EF] transition">
+        <div class="flex items-start gap-5">
+          <span class="grid place-items-center w-12 h-12 rounded-full bg-[#1CD760]">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="8" fill="white"/>
+              <path d="M12 7v5l3 3" stroke="#1CD760" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <div class="min-w-0">
+            <h3 class="text-[22px] sm:text-[24px] font-extrabold">
+              Advice for initial job interviews
+            </h3>
+            <p class="mt-2 text-[#28B463] font-semibold inline-flex items-center gap-2">
+              Self help
+              <span class="text-[#9aa5a0]">•</span>
+              <span class="text-[#9aa5a0] font-semibold">12 Episodes</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4 (the “featured” one in the screenshot style) -->
+    <article class="group relative rounded-[22px] border border-[#e9edef] bg-white shadow-sm hover:shadow-[0_14px_40px_rgba(0,0,0,.06)] transition">
+      <a href="#" aria-label="Open"
+         class="absolute left-1/2 -translate-x-1/2 -top-7 opacity-0 scale-75 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300">
+        <span class="grid place-items-center w-14 h-14 rounded-full bg-[#28B463] text-white shadow-[0_10px_24px_rgba(40,180,99,.35)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <div class="p-6 sm:p-7 md:p-8 lg:p-9 rounded-[22px] group-hover:bg-[#EAF7EF] transition">
+        <div class="flex items-start gap-5">
+          <span class="grid place-items-center w-12 h-12 rounded-full bg-[#1CD760]">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="8" fill="white"/>
+              <path d="M12 7v5l3 3" stroke="#1CD760" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <div class="min-w-0">
+            <h3 class="text-[22px] sm:text-[24px] font-extrabold">
+              Work Life Balance Podcast
+            </h3>
+            <p class="mt-2 text-[#28B463] font-semibold inline-flex items-center gap-2">
+              Self help
+              <span class="text-[#9aa5a0]">•</span>
+              <span class="text-[#9aa5a0] font-semibold">12 Episodes</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="group relative rounded-[22px] border border-[#e9edef] bg-white shadow-sm hover:shadow-[0_14px_40px_rgba(0,0,0,.06)] transition">
+      <a href="#" aria-label="Open"
+         class="absolute left-1/2 -translate-x-1/2 -top-7 opacity-0 scale-75 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300">
+        <span class="grid place-items-center w-14 h-14 rounded-full bg-[#28B463] text-white shadow-[0_10px_24px_rgba(40,180,99,.35)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <div class="p-6 sm:p-7 md:p-8 lg:p-9 rounded-[22px] group-hover:bg-[#EAF7EF] transition">
+        <div class="flex items-start gap-5">
+          <span class="grid place-items-center w-12 h-12 rounded-[10px] bg-black text-white">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M5 16V8h6l4 4v4H5zM11 8v4h4" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <div class="min-w-0">
+            <h3 class="text-[22px] sm:text-[24px] font-extrabold">
+              You should fail first. It’s a key
+            </h3>
+            <p class="mt-2 text-[#28B463] font-semibold inline-flex items-center gap-2">
+              Self help
+              <span class="text-[#9aa5a0]">•</span>
+              <span class="text-[#9aa5a0] font-semibold">12 Episodes</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="group relative rounded-[22px] border border-[#e9edef] bg-white shadow-sm hover:shadow-[0_14px_40px_rgba(0,0,0,.06)] transition">
+      <a href="#" aria-label="Open"
+         class="absolute left-1/2 -translate-x-1/2 -top-7 opacity-0 scale-75 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300">
+        <span class="grid place-items-center w-14 h-14 rounded-full bg-[#28B463] text-white shadow-[0_10px_24px_rgba(40,180,99,.35)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <div class="p-6 sm:p-7 md:p-8 lg:p-9 rounded-[22px] group-hover:bg-[#EAF7EF] transition">
+        <div class="flex items-start gap-5">
+          <span class="grid place-items-center w-12 h-12 rounded-full bg-[#1CD760]">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="8" fill="white"/>
+              <path d="M12 7v5l3 3" stroke="#1CD760" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <div class="min-w-0">
+            <h3 class="text-[22px] sm:text-[24px] font-extrabold">
+              Level Up Podcast
+            </h3>
+            <p class="mt-2 text-[#28B463] font-semibold inline-flex items-center gap-2">
+              Self help
+              <span class="text-[#9aa5a0]">•</span>
+              <span class="text-[#9aa5a0] font-semibold">12 Episodes</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+
+
+<script>
+  const wrap = document.getElementById('catWrap');
+  const prev = document.getElementById('prevBtn');
+  const next = document.getElementById('nextBtn');
+
+  function scrollByAmount(dir){
+    const amount = Math.min(480, wrap.clientWidth * 0.8);
+    wrap.scrollBy({ left: dir * amount, behavior: 'smooth' });
+  }
+  prev.addEventListener('click', () => scrollByAmount(-1));
+  next.addEventListener('click', () => scrollByAmount(1));
+
+  // Hide arrows if not scrollable (optional)
+  const updateArrows = () => {
+    const max = wrap.scrollWidth - wrap.clientWidth - 4;
+    prev.style.opacity = wrap.scrollLeft <= 4 ? .45 : 1;
+    next.style.opacity = wrap.scrollLeft >= max ? .45 : 1;
+  };
+  wrap.addEventListener('scroll', updateArrows, { passive: true });
+  window.addEventListener('resize', updateArrows);
+  updateArrows();
+</script>
+
+<!-- ===================== CTA SECTION ===================== -->
+<section class="relative px-4 md:px-8 lg:px-10 py-12 md:py-16">
+  <div class="max-w-6xl mx-auto">
+    <div class="relative cta-gradient rounded-[32px] shadow-[0_20px_60px_rgba(0,0,0,.12)] overflow-hidden px-6 sm:px-8 md:px-10 lg:px-14 py-10 md:py-12 beam">
+      <div class="grid md:grid-cols-2 gap-6 items-center">
+        <!-- Left content -->
+        <div class="max-w-2xl">
+          <p class="text-xl md:text-2xl font-semibold text-white/90">Ready to Start</p>
+          <h2 class="mt-2 text-[34px] md:text-[44px] lg:text-[52px] leading-[1.1] font-extrabold text-white">
+            Your Exam Prep Journey?
+          </h2>
+          <p class="mt-4 text-white/90 max-w-xl">
+            Join thousands of successful candidates who achieved their dreams with Exam Dodo. 
+            Start your preparation today with our expert guidance and comprehensive study materials.
+          </p>
+
+          <div class="mt-6 flex flex-wrap gap-4">
+            <button onclick="navigateTo('signup')" 
+                    class="rounded-2xl bg-white text-examgreendark font-bold px-6 py-4 border border-white hover:bg-gray-50 transition shadow-lg">
+              Start Free Trial
+            </button>
+            <button onclick="navigateTo('courses')" 
+                    class="rounded-2xl bg-transparent text-white font-semibold px-6 py-4 border border-white/30 hover:bg-white/20 transition inline-flex items-center gap-2">
+              Browse Courses
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right image -->
+        <div class="relative">
+          <div class="w-full max-w-[480px] mx-auto md:mx-0 md:ml-auto">
+            <div class="relative bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <div class="text-center">
+                <div class="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
+                  <i class="fas fa-graduation-cap text-3xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Join 50,000+ Students</h3>
+                <p class="text-white/80 text-sm">Who successfully cleared their exams with us</p>
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-2 gap-4 mt-6">
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-white">98%</div>
+                    <div class="text-xs text-white/80">Success Rate</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-2xl font-bold text-white">500+</div>
+                    <div class="text-xs text-white/80">Mock Tests</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer-gradient text-white">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-10 pt-12 pb-8">
+    
+    <!-- Top section -->
+    <div class="grid md:grid-cols-4 gap-8 mb-10">
+      
+      <!-- Brand column -->
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="https://storage.googleapis.com/a1aa/image/58325683-719c-4d3a-88d5-47c504189d8b.jpg"
+               alt="Exam Dodo logo"
+               class="w-10 h-10 rounded-full border border-white/30"/>
+          <div class="text-2xl font-extrabold tracking-wide">EXAM DODO</div>
+        </div>
+        <p class="text-white/90 mb-6 leading-relaxed">
+          Your trusted partner in competitive exam preparation. We provide comprehensive study materials, 
+          expert guidance, and innovative learning solutions.
+        </p>
+        
+        <!-- Social links -->
+        <div class="flex items-center gap-3">
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-facebook-f text-sm"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-twitter text-sm"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-linkedin-in text-sm"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-youtube text-sm"></i>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition">
+            <i class="fab fa-instagram text-sm"></i>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+        <ul class="space-y-3 text-white/90">
+          <li><a href="#" onclick="navigateTo('home')" class="hover:text-white transition">Home</a></li>
+          <li><a href="#" onclick="navigateTo('all-exams')" class="hover:text-white transition">All Exams</a></li>
+          <li><a href="#" onclick="navigateTo('mock-tests')" class="hover:text-white transition">Mock Tests</a></li>
+          <li><a href="#" onclick="navigateTo('previous-papers')" class="hover:text-white transition">Previous Papers</a></li>
+          <li><a href="#" onclick="navigateTo('syllabus')" class="hover:text-white transition">Syllabus</a></li>
+          <li><a href="#" onclick="navigateTo('about')" class="hover:text-white transition">About Us</a></li>
+        </ul>
+      </div>
+      
+      <!-- Popular Exams -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Popular Exams</h4>
+        <ul class="space-y-3 text-white/90">
+          <li><a href="#" onclick="navigateTo('upsc')" class="hover:text-white transition">UPSC</a></li>
+          <li><a href="#" onclick="navigateTo('ssc')" class="hover:text-white transition">SSC</a></li>
+          <li><a href="#" onclick="navigateTo('banking')" class="hover:text-white transition">Banking</a></li>
+          <li><a href="#" onclick="navigateTo('defence')" class="hover:text-white transition">Defence</a></li>
+          <li><a href="#" onclick="navigateTo('teaching')" class="hover:text-white transition">Teaching</a></li>
+          <li><a href="#" onclick="navigateTo('tnpsc')" class="hover:text-white transition">TNPSC</a></li>
+        </ul>
+      </div>
+      
+      <!-- Contact Info -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+        <div class="space-y-4 text-white/90">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-map-marker-alt text-examgreenlight mt-1"></i>
+            <div>
+              <p class="font-medium">Address</p>
+              <p class="text-sm">123 Education Street<br/>Chennai, Tamil Nadu 600001</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <i class="fas fa-phone text-examgreenlight mt-1"></i>
+            <div>
+              <p class="font-medium">Phone</p>
+              <p class="text-sm">+91 98765 43210</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <i class="fas fa-envelope text-examgreenlight mt-1"></i>
+            <div>
+              <p class="font-medium">Email</p>
+              <p class="text-sm">support@examdodo.com</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <i class="fas fa-clock text-examgreenlight mt-1"></i>
+            <div>
+              <p class="font-medium">Support Hours</p>
+              <p class="text-sm">Mon - Sat: 9 AM - 8 PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Newsletter Subscription -->
+    <div class="border-t border-white/20 pt-8 mb-8">
+      <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div>
+          <h4 class="text-xl font-bold mb-2">Stay Updated!</h4>
+          <p class="text-white/90">Get the latest exam notifications, study tips, and exclusive offers.</p>
+        </div>
+        <div class="flex gap-3">
+          <input type="email" 
+                 placeholder="Enter your email address" 
+                 class="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:border-examgreenlight focus:bg-white/15 transition"/>
+          <button class="px-6 py-3 bg-examgreenlight hover:bg-examgreen text-ink font-semibold rounded-xl transition">
+            Subscribe
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bottom bar -->
+    <div class="border-t border-white/20 pt-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="text-white/80 text-sm text-center md:text-left">
+          © 2025 Exam Dodo. All rights reserved. | Designed with ❤️ for your success.
+        </div>
+        <div class="flex flex-wrap gap-6 text-sm text-white/80">
+          <a href="#" class="hover:text-white transition">Privacy Policy</a>
+          <a href="#" class="hover:text-white transition">Terms of Service</a>
+          <a href="#" class="hover:text-white transition">Refund Policy</a>
+          <a href="#" class="hover:text-white transition">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+  function navigateTo(path) {
+    console.log('Navigate to:', path);
+    // Add your navigation logic here
+  }
+  
+  // Newsletter subscription
+  document.querySelector('button').addEventListener('click', function() {
+    const email = document.querySelector('input[type="email"]').value;
+    if (email) {
+      alert('Thank you for subscribing! We will send you updates at: ' + email);
+      document.querySelector('input[type="email"]').value = '';
+    } else {
+      alert('Please enter a valid email address.');
+    }
+  });
+</script>
+
+
+</body>
+</html>

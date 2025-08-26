@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exam Dodo — Full-Width, Responsive Build</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Tailwind config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            exam: {
+              ink: '#0f3a35',
+              base: '#163f39',
+              mint: '#eaf2ef',
+              ring: '#88c19c',
+              green: '#42C8B7',
+              green2: '#329d8f',
+            }
+          },
+          boxShadow: {
+            glow: '0 8px 24px rgba(66,200,183,.18)'
+          },
+          borderRadius: { '2.5xl': '1.25rem' }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root{
+      --ink:#0f3a35;          /* deep green text / panel */
+      --mint:#eaf2ef;         /* page bg */
+      --pill:#e9eee6;         /* trust badge bg */
+      --cta:#163f39;          /* primary button */
+      --cta-ring:#88c19c;     /* small accent green */
+    }
+    html,body{ background: var(--mint); color:#122220 }
+    body{ font-family:"Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial }
+
+    /* Links */
+    .link-underline{ position:relative; }
+    .link-underline::after{ content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:#42C8B7; transition:width .25s ease; border-radius:2px; }
+    .link-underline:hover::after{ width:100%; }
+
+    /* Grid background */
+    .bg-grid {
+      background-image:
+        linear-gradient(to right, rgba(16,24,20,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16,24,20,.06) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+
+    /* Cards */
+    .card{ background:#fff; border-radius:1.25rem; box-shadow:0 12px 24px rgba(10,35,30,.10); border:1px solid rgba(0,0,0,.04) }
+
+    /* Hide scrollbar where needed */
+    .hide-scroll::-webkit-scrollbar{ display:none }
+
+    /* Simple animation */
+    .fade-in{ animation: fade .5s ease both }
+    @keyframes fade{ from{opacity:0; transform: translateY(8px)} to{opacity:1; transform:none} }
+  </style>
+</head>
+<body class="antialiased text-black">
+
+  <!-- ====================== HEADER ====================== -->
+  <header class="sticky top-0 z-50 bg-exam-ink text-white">
+    <div class="mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16">
+      <div class="h-16 md:h-20 flex items-center justify-between">
+        <!-- Brand -->
+        <a href="#" class="flex items-center gap-3 select-none">
+          <img src="Cute cartoon Baby Dodo Bird illustration (1).jpeg" alt="Exam Dodo" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/50 shadow-glow" />
+          <span class="font-extrabold text-xl md:text-2xl tracking-wide">EXAM DODO</span>
+        </a>
+        <!-- Desktop Nav -->
+        <nav class="hidden lg:flex items-center gap-8 text-sm">
+          <a class="hover:text-exam-green link-underline" href="#exams">Exams</a>
+          <a class="hover:text-exam-green link-underline" href="#courses">Courses</a>
+          <a class="hover:text-exam-green link-underline" href="#pricing">Pricing</a>
+          <a class="hover:text-exam-green link-underline" href="#about">About</a>
+          <a class="hover:text-exam-green link-underline" href="#faq">FAQ</a>
+        </nav>
+        <!-- Actions -->
+        <div class="hidden lg:flex items-center gap-2">
+          <button class="rounded-full px-5 py-2 text-sm font-semibold text-exam-green bg-white border border-white/70 hover:bg-gray-100 transition shadow-glow">Sign Up</button>
+          <button class="rounded-full px-5 py-2 text-sm font-semibold text-white bg-exam-green2 hover:bg-white hover:text-exam-green border border-white/70 transition shadow-glow">Login</button>
+        </div>
+        <!-- Mobile menu button -->
+        <button id="menuBtn" class="lg:hidden w-10 h-10 inline-flex items-center justify-center rounded-full border border-white/30/50">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile drawer -->
+    <div id="mobileMenu" class="lg:hidden hidden border-t border-white/10 bg-exam-ink/95 backdrop-blur">
+      <div class="px-4 sm:px-6 py-4 flex flex-col gap-4 text-[15px]">
+        <a class="hover:text-exam-green" href="#exams">Exams</a>
+        <a class="hover:text-exam-green" href="#courses">Courses</a>
+        <a class="hover:text-exam-green" href="#pricing">Pricing</a>
+        <a class="hover:text-exam-green" href="#about">About</a>
+        <a class="hover:text-exam-green" href="#faq">FAQ</a>
+        <div class="pt-2 flex gap-2">
+          <button class="flex-1 rounded-full px-5 py-2 text-sm font-semibold text-exam-green bg-white border border-white/70">Sign Up</button>
+          <button class="flex-1 rounded-full px-5 py-2 text-sm font-semibold text-white bg-exam-green2">Login</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================== HERO (Full Screen) ====================== -->
+  <section class="relative bg-grid overflow-hidden">
+    <div class="relative min-h-[88vh] md:min-h-[92vh] w-full flex items-center">
+      <div class="mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16">
+        <div class="grid xl:grid-cols-2 gap-10 xl:gap-16 items-center">
+          <!-- Left copy -->
+          <div class="fade-in">
+            <div class="inline-flex items-center gap-3 bg-[var(--pill)] text-[var(--ink)]/80 rounded-full px-4 py-2 text-sm font-semibold">
+              <span class="inline-flex w-2.5 h-2.5 rounded-full bg-[var(--ink)]/40"></span>
+              <span>250+ trusted partners</span>
+            </div>
+            <h1 class="mt-6 text-[clamp(36px,6vw,76px)] leading-[1.05] font-extrabold text-exam-ink">Recruitment process<br/>with <span class="text-exam-green2">smart solutions.</span></h1>
+            <p class="mt-5 text-lg text-[#4d5b57] max-w-2xl">We connect top talent with the right opportunities. Practice exams, live analytics, and curated courses across Banking, SSC, UPSC, Railways & more.</p>
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              <a href="#courses" class="inline-flex items-center gap-3 rounded-full px-6 py-3 font-semibold bg-[var(--cta)] text-white shadow-md">Explore Courses <i class="fa-solid fa-arrow-right"></i></a>
+              <a href="#pricing" class="inline-flex items-center gap-3 rounded-full px-6 py-3 font-semibold bg-white text-exam-ink border">View Pricing</a>
+            </div>
+            <div class="mt-6 flex items-center gap-6 text-sm text-exam-ink/70">
+              <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> Latest syllabus</div>
+              <div class="flex items-center gap-2"><i class="fa-solid fa-bolt"></i> Real-time analytics</div>
+              <div class="flex items-center gap-2"><i class="fa-solid fa-shield-halved"></i> Verified mentors</div>
+            </div>
+          </div>
+          <!-- Right visual -->
+          <div class="relative h-[420px] sm:h-[520px] xl:h-[620px] fade-in">
+            <div class="absolute inset-0 rounded-2.5xl overflow-hidden shadow-2xl">
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop" alt="Students learning" class="w-full h-full object-cover"/>
+            </div>
+            <div class="absolute -bottom-6 -left-4 sm:-left-6 bg-white/90 backdrop-blur card p-4 sm:p-5 flex items-center gap-3">
+              <img src="https://randomuser.me/api/portraits/women/65.jpg" class="w-10 h-10 rounded-full object-cover" alt="Mentor"/>
+              <div>
+                <div class="text-sm font-semibold">Personal Mentor</div>
+                <div class="text-xs text-gray-600">Get a weekly study plan</div>
+              </div>
+            </div>
+            <div class="absolute -top-6 -right-4 sm:-right-6 bg-white/90 backdrop-blur card p-4 sm:p-5 flex items-center gap-3">
+              <i class="fa-solid fa-trophy text-yellow-500"></i>
+              <div>
+                <div class="text-sm font-semibold">Top 1% Ranks</div>
+                <div class="text-xs text-gray-600">from our test series</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== EXAMS QUICK ACCESS ====================== -->
+  <section id="exams" class="w-full py-14 sm:py-16 lg:py-20 bg-white">
+    <div class="mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-exam-ink text-center">Browse Exams</h2>
+      <p class="mt-3 text-center text-gray-600 max-w-2xl mx-auto">Jump straight into your category. Each exam hub includes syllabus, mock tests, PYQs and strategy notes.</p>
+      <ul class="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5">
+        <!-- Bubble item -->
+        <li class="group">
+          <div class="aspect-square rounded-full overflow-hidden bg-gradient-to-tr from-green-100 to-green-200 shadow" >
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop" alt="TNPSC" class="w-full h-full object-cover group-hover:scale-105 transition"/>
+          </div>
+          <div class="mt-3 text-center font-semibold text-green-800">TNPSC</div>
+        </li>
+        <li class="group">
+          <div class="aspect-square rounded-full overflow-hidden bg-gradient-to-tr from-blue-100 to-blue-200 shadow" >
+            <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=800&auto=format&fit=crop" alt="RRB" class="w-full h-full object-cover group-hover:scale-105 transition"/>
+          </div>
+          <div class="mt-3 text-center font-semibold text-blue-800">RRB</div>
+        </li>
+        <li class="group">
+          <div class="aspect-square rounded-full overflow-hidden bg-gradient-to-tr from-yellow-100 to-yellow-200 shadow" >
+            <img src="https://images.unsplash.com/photo-1553729784-e91953dec042?q=80&w=800&auto=format&fit=crop" alt="Banking" class="w-full h-full object-cover group-hover:scale-105 transition"/>
+          </div>
+          <div class="mt-3 text-center font-semibold text-yellow-700">Banking</div>
+        </li>
+        <li class="group">
+          <div class="aspect-square rounded-full overflow-hidden bg-gradient-to-tr from-purple-100 to-purple-200 shadow" >
+            <img src="https://images.unsplash.com/photo-1516382799247-87df95d790b4?q=80&w=800&auto=format&fit=crop" alt="SSC" class="w-full h-full object-cover group-hover:scale-105 transition"/>
+          </div>
+          <div class="mt-3 text-center font-semibold text-purple-700">SSC</div>
+        </li>
+        <li class="group">
+          <div class="aspect-square rounded-full overflow-hidden bg-gradient-to-tr from-red-100 to-red-200 shadow" >
+            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800&auto=format&fit=crop" alt="UPSC" class="w-full h-full object-cover group-hover:scale-105 transition"/>
+          </div>
+          <div class="mt-3 text-center font-semibold text-red-700">UPSC</div>
+        </li>
+        <li class="group">
+          <div class="aspect-square rounded-full overflow-hidden bg-gradient-to-tr from-indigo-100 to-indigo-200 shadow" >
+            <img src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?q=80&w=800&auto=format&fit=crop" alt="Defence" class="w-full h-full object-cover group-hover:scale-105 transition"/>
+          </div>
+          <div class="mt-3 text-center font-semibold text-indigo-700">Defence</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====================== COURSES w/ FILTERS ====================== -->
+  <section id="courses" class="py-16 lg:py-20 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
+    <div class="mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16">
+      <div class="flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-exam-ink">Popular Courses</h2>
+          <p class="text-gray-600 mt-1">Handpicked modules with live doubt-solving and mock test bundles.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button data-filter="trending" class="filter-btn rounded-full px-4 py-2 text-sm font-semibold border bg-white">Trending</button>
+          <button data-filter="gold" class="filter-btn rounded-full px-4 py-2 text-sm font-semibold border bg-yellow-50">Gold</button>
+          <button data-filter="silver" class="filter-btn rounded-full px-4 py-2 text-sm font-semibold border bg-gray-50">Silver</button>
+          <button data-filter="platinum" class="filter-btn rounded-full px-4 py-2 text-sm font-semibold border bg-purple-50">Platinum</button>
+          <button data-filter="all" class="filter-btn rounded-full px-4 py-2 text-sm font-semibold border">All</button>
+        </div>
+      </div>
+
+      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="courseGrid">
+        <!-- Course card template -->
+        <article class="card overflow-hidden group" data-tier="trending gold">
+          <div class="aspect-[16/10] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1580894894513-541e068a1dd2?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition" alt="Banking Mastery"/>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg">Banking Mastery</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border">Trending</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">IBPS/SBI complete pack with live mocks.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="text-exam-ink font-semibold">₹1,999</div>
+              <a href="#" class="text-sm font-semibold text-exam-green2 hover:underline">Preview</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overflow-hidden group" data-tier="silver">
+          <div class="aspect-[16/10] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition" alt="SSC CGL Crash"/>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg">SSC CGL Crash</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-800 border">Silver</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">Tier I/II booster with PYQ drills.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="text-exam-ink font-semibold">₹1,299</div>
+              <a href="#" class="text-sm font-semibold text-exam-green2 hover:underline">Preview</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overflow-hidden group" data-tier="gold">
+          <div class="aspect-[16/10] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition" alt="UPSC Foundation"/>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg">UPSC Foundation</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-yellow-50 text-yellow-800 border">Gold</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">GS+CSAT with daily answer writing.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="text-exam-ink font-semibold">₹4,999</div>
+              <a href="#" class="text-sm font-semibold text-exam-green2 hover:underline">Preview</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overflow-hidden group" data-tier="platinum">
+          <div class="aspect-[16/10] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition" alt="Defence Elite"/>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg">Defence Elite</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-purple-50 text-purple-800 border">Platinum</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">NDA/CDS/AFCAT with fitness plan.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="text-exam-ink font-semibold">₹6,999</div>
+              <a href="#" class="text-sm font-semibold text-exam-green2 hover:underline">Preview</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overflow-hidden group" data-tier="trending silver">
+          <div class="aspect-[16/10] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1542744173-05336fcc7ad4?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition" alt="English + Aptitude Pro"/>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg">English + Aptitude Pro</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border">Trending</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">Topic-wise drills, vocab + reasoning.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="text-exam-ink font-semibold">₹899</div>
+              <a href="#" class="text-sm font-semibold text-exam-green2 hover:underline">Preview</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overflow-hidden group" data-tier="gold">
+          <div class="aspect-[16/10] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition" alt="Railway Mega Pack"/>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg">Railway Mega Pack</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-yellow-50 text-yellow-800 border">Gold</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">RRB NTPC/Group D course & mocks.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="text-exam-ink font-semibold">₹2,499</div>
+              <a href="#" class="text-sm font-semibold text-exam-green2 hover:underline">Preview</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overflow-hidden group" data-tier="silver">
+          <div class="aspect-[16/10] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition" alt="State PSC Starter"/>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg">State PSC Starter</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-800 border">Silver</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">General studies + current affairs.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="text-exam-ink font-semibold">₹799</div>
+              <a href="#" class="text-sm font-semibold text-exam-green2 hover:underline">Preview</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card overflow-hidden group" data-tier="platinum">
+          <div class="aspect-[16/10] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition" alt="UPSC Advanced Lab"/>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg">UPSC Advanced Lab</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-purple-50 text-purple-800 border">Platinum</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-1">Interview guidance + mains labs.</p>
+            <div class="mt-3 flex items-center justify-between">
+              <div class="text-exam-ink font-semibold">₹9,999</div>
+              <a href="#" class="text-sm font-semibold text-exam-green2 hover:underline">Preview</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== PRICING PACKS ====================== -->
+  <section id="pricing" class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-exam-ink">Choose Your Plan</h2>
+        <p class="text-gray-600 mt-2">Simple tiers with everything you need to crack the exam.</p>
+      </div>
+      <div class="mt-10 grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <!-- Trending -->
+        <div class="card p-6 border-emerald-200">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold">Trending</h3>
+            <span class="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border">Popular</span>
+          </div>
+          <div class="mt-2 text-3xl font-extrabold">₹999<span class="text-base text-gray-500 font-medium">/mo</span></div>
+          <ul class="mt-4 space-y-2 text-sm text-gray-700">
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> All mock tests</li>
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> PYQs + solutions</li>
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> Weekly mentor calls</li>
+          </ul>
+          <button class="mt-6 w-full rounded-full px-6 py-3 font-semibold bg-exam-ink text-white">Start</button>
+        </div>
+        <!-- Silver -->
+        <div class="card p-6">
+          <h3 class="text-xl font-bold">Silver</h3>
+          <div class="mt-2 text-3xl font-extrabold">₹1,499<span class="text-base text-gray-500 font-medium">/mo</span></div>
+          <ul class="mt-4 space-y-2 text-sm text-gray-700">
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> Trending + 2 live classes</li>
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> Doubt forum access</li>
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> Sectional drills</li>
+          </ul>
+          <button class="mt-6 w-full rounded-full px-6 py-3 font-semibold bg-exam-green2 text-white">Upgrade</button>
+        </div>
+        <!-- Gold -->
+        <div class="card p-6 border-yellow-200">
+          <h3 class="text-xl font-bold">Gold</h3>
+          <div class="mt-2 text-3xl font-extrabold">₹2,999<span class="text-base text-gray-500 font-medium">/mo</span></div>
+          <ul class="mt-4 space-y-2 text-sm text-gray-700">
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> Silver + full courses</li>
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> Analytics dashboard</li>
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> Interview prep</li>
+          </ul>
+          <button class="mt-6 w-full rounded-full px-6 py-3 font-semibold bg-yellow-500 text-white">Go Gold</button>
+        </div>
+        <!-- Platinum -->
+        <div class="card p-6 border-purple-200">
+          <h3 class="text-xl font-bold">Platinum</h3>
+          <div class="mt-2 text-3xl font-extrabold">₹5,999<span class="text-base text-gray-500 font-medium">/mo</span></div>
+          <ul class="mt-4 space-y-2 text-sm text-gray-700">
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> Everything in Gold</li>
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> 1:1 mentorship</li>
+            <li><i class="fa-solid fa-check mr-2 text-emerald-600"></i> Personalized study plan</li>
+          </ul>
+          <button class="mt-6 w-full rounded-full px-6 py-3 font-semibold bg-purple-600 text-white">Go Platinum</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== ABOUT + STATS ====================== -->
+  <section id="about" class="py-16 lg:py-20 bg-gradient-to-r from-white via-green-50 to-white">
+    <div class="mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16">
+      <div class="grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-exam-ink">Why Exam Dodo?</h2>
+          <p class="mt-3 text-gray-700">We blend rigorous content with delightful UI. From daily goals to deep analytics, each step of your journey is designed for clarity and confidence.</p>
+          <ul class="mt-6 grid sm:grid-cols-2 gap-4 text-sm">
+            <li class="card p-4">
+              <div class="font-bold">90% Syllabus Coverage</div>
+              <div class="text-gray-600 mt-1">Mapped to latest patterns</div>
+            </li>
+            <li class="card p-4">
+              <div class="font-bold">30% Faster Prep</div>
+              <div class="text-gray-600 mt-1">via smart revision</div>
+            </li>
+            <li class="card p-4">
+              <div class="font-bold">Live Mentorship</div>
+              <div class="text-gray-600 mt-1">Weekly checkpoints</div>
+            </li>
+            <li class="card p-4">
+              <div class="font-bold">Community Doubts</div>
+              <div class="text-gray-600 mt-1">Instant peer help</div>
+            </li>
+          </ul>
+        </div>
+        <div class="relative">
+          <img src="https://images.unsplash.com/photo-1552581234-26160f608093?q=80&w=1600&auto=format&fit=crop" alt="About us" class="rounded-2.5xl w-full h-[420px] object-cover shadow-xl"/>
+          <div class="absolute -bottom-5 -right-4 bg-white card p-4 flex items-center gap-3">
+            <i class="fa-solid fa-users"></i>
+            <div>
+              <div class="text-sm font-semibold">200K+ Learners</div>
+              <div class="text-xs text-gray-600">across 30+ exams</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== TESTIMONIALS ====================== -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-exam-ink">What learners say</h2>
+        <div class="text-sm text-gray-600">Rated 4.8/5 from 3,200+ reviews</div>
+      </div>
+      <div class="mt-8 grid md:grid-cols-3 gap-6">
+        <blockquote class="card p-6">
+          <div class="flex items-center gap-3">
+            <img src="https://randomuser.me/api/portraits/men/31.jpg" class="w-10 h-10 rounded-full"/>
+            <div class="font-semibold">Ravi Kumar</div>
+          </div>
+          <p class="mt-3 text-gray-700">“The mock tests are exactly like the real exam. Analytics told me where to push.”</p>
+        </blockquote>
+        <blockquote class="card p-6">
+          <div class="flex items-center gap-3">
+            <img src="https://randomuser.me/api/portraits/women/22.jpg" class="w-10 h-10 rounded-full"/>
+            <div class="font-semibold">Shreya Patel</div>
+          </div>
+          <p class="mt-3 text-gray-700">“Loved the UPSC answer writing labs. The feedback was actionable.”</p>
+        </blockquote>
+        <blockquote class="card p-6">
+          <div class="flex items-center gap-3">
+            <img src="https://randomuser.me/api/portraits/men/66.jpg" class="w-10 h-10 rounded-full"/>
+            <div class="font-semibold">Aman Verma</div>
+          </div>
+          <p class="mt-3 text-gray-700">“Clean UI, great mentors, and a plan that kept me consistent.”</p>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== FAQ ====================== -->
+  <section id="faq" class="py-16 lg:py-20 bg-gradient-to-r from-white via-blue-50 to-white">
+    <div class="mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-exam-ink text-center">Frequently Asked Questions</h2>
+      <div class="mt-8 max-w-4xl mx-auto space-y-4">
+        <details class="card p-4">
+          <summary class="font-semibold cursor-pointer">Are courses updated to latest patterns?</summary>
+          <p class="mt-2 text-gray-700">Yes. We update immediately after official notifications and exam analysis.</p>
+        </details>
+        <details class="card p-4">
+          <summary class="font-semibold cursor-pointer">Do I get a refund if I cancel?</summary>
+          <p class="mt-2 text-gray-700">You can cancel anytime. Refunds follow our fair-use policy shown at checkout.</p>
+        </details>
+        <details class="card p-4">
+          <summary class="font-semibold cursor-pointer">Is mentorship available for all tiers?</summary>
+          <p class="mt-2 text-gray-700">Group mentorship is available from Silver; 1:1 mentorship in Platinum.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer class="bg-exam-ink text-white">
+    <div class="mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16 py-12">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center gap-3">
+            <img src="Cute cartoon Baby Dodo Bird illustration (1).jpeg" alt="Exam Dodo" class="w-10 h-10 rounded-full border border-white/50" />
+            <span class="font-extrabold text-xl">EXAM DODO</span>
+          </div>
+          <p class="mt-3 text-white/80 text-sm">Smart prep for Banking, SSC, UPSC, Railways & more.</p>
+        </div>
+        <div>
+          <div class="font-bold mb-3">Company</div>
+          <ul class="space-y-2 text-white/80 text-sm">
+            <li><a href="#about" class="hover:underline">About</a></li>
+            <li><a href="#" class="hover:underline">Careers</a></li>
+            <li><a href="#" class="hover:underline">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-bold mb-3">Resources</div>
+          <ul class="space-y-2 text-white/80 text-sm">
+            <li><a href="#exams" class="hover:underline">Exam Hubs</a></li>
+            <li><a href="#courses" class="hover:underline">Courses</a></li>
+            <li><a href="#faq" class="hover:underline">Help Center</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="font-bold mb-3">Get the app</div>
+          <div class="flex gap-3">
+            <a href="#" class="bg-white text-black px-4 py-2 rounded-lg text-sm">App Store</a>
+            <a href="#" class="bg-white text-black px-4 py-2 rounded-lg text-sm">Google Play</a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t border-white/10 text-xs text-white/70 flex items-center justify-between">
+        <div>© <span id="year"></span> Exam Dodo. All rights reserved.</div>
+        <div class="flex gap-4">
+          <a href="#" class="hover:underline">Terms</a>
+          <a href="#" class="hover:underline">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====================== SCRIPTS ====================== -->
+  <script>
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', ()=> mobileMenu.classList.toggle('hidden'));
+
+    // course filter buttons
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('#courseGrid [data-tier]');
+    btns.forEach(btn => btn.addEventListener('click', () => {
+      const tier = btn.getAttribute('data-filter');
+      btns.forEach(b=> b.classList.remove('ring-2','ring-exam-green2'));
+      btn.classList.add('ring-2','ring-exam-green2');
+      cards.forEach(card => {
+        const tiers = card.getAttribute('data-tier') || '';
+        card.classList.remove('hidden');
+        if (tier !== 'all' && !tiers.includes(tier)) card.classList.add('hidden');
+      });
+    }));
+  </script>
+</body>
+</html>
